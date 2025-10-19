@@ -1,0 +1,20 @@
+# Dependencias para ELiaS Telegram Bot
+# ====================================
+
+# Bot de Telegram
+python-telegram-bot
+
+# Dependencias base de ELiaS (si no están instaladas)
+notion-client
+google-generativeai
+langgraph
+langchain
+langchain-community
+python-dotenv
+assemblyai
+pydub
+
+
+# Utilidades adicionales
+aiofiles
+asyncio-throttle
