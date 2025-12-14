@@ -30,6 +30,7 @@ class LangGraphService:
         """Inicializa el servicio LangGraph"""
         self._proyectos_service = None
         self._tareas_service = None
+        self._eventos_service = None
         self._gemini_service = None
         self._workflow = None
         
@@ -60,6 +61,18 @@ class LangGraphService:
         return self._tareas_service
     
     @property
+    def eventos_service(self):
+        """Lazy loading del servicio de eventos"""
+        if self._eventos_service is None:
+            from notion.services.eventos_service import EventosService
+            try:
+                self._eventos_service = EventosService()
+            except Exception as e:
+                print(f"⚠️ EventosService no disponible: {e}")
+                self._eventos_service = None
+        return self._eventos_service
+    
+    @property
     def gemini_service(self):
         """Lazy loading del servicio de Gemini"""
         if self._gemini_service is None:
@@ -69,7 +82,7 @@ class LangGraphService:
     # ===== NODOS DEL WORKFLOW =====
     
     def nodo_decisor_intencion(self, state: EliasState) -> EliasState:
-        """NODO DECISOR: Determina si el usuario quiere crear, consultar o ambas cosas"""
+        """NODO DECISOR: Determina si el usuario quiere crear tarea, evento, consultar o ambas"""
         consulta = state["user_query"]
         
         try:
@@ -127,6 +140,9 @@ class LangGraphService:
                 respuesta += f"⚡ **Prioridad:** {resultado.prioridad.value if hasattr(resultado.prioridad, 'value') else resultado.prioridad}\n"
                 respuesta += f"📊 **Estado:** {resultado.estado.value if hasattr(resultado.estado, 'value') else resultado.estado}\n"
                 
+                if hasattr(resultado, 'tiempo_estimado') and resultado.tiempo_estimado:
+                    respuesta += f"⏱️ **Tiempo Estimado:** {resultado.tiempo_estimado} min\n"
+                
                 if hasattr(resultado, 'fecha_vencimiento') and resultado.fecha_vencimiento:
                     respuesta += f"📅 **Vencimiento:** {resultado.fecha_vencimiento.strftime('%d/%m/%Y')}\n"
                 
@@ -145,7 +161,7 @@ class LangGraphService:
                 except:
                     pass
                     
-                respuesta += f"\n\n💡 *Tip: Ahora puedes usar lenguaje natural como 'estudiar matemáticas mañana'*"
+                respuesta += f"\n\n💡 *Tip: Ahora puedes usar lenguaje natural como 'estudiar matemáticas mañana por 2 horas'*"
                 print(f"✅ {respuesta}")
                 
                 return {
@@ -168,6 +184,9 @@ class LangGraphService:
                     for i, tarea in enumerate(tareas_exitosas, 1):
                         respuesta += f"**{i}.** {tarea.nombre}\n"
                         respuesta += f"   ⚡ {tarea.prioridad.value if hasattr(tarea.prioridad, 'value') else tarea.prioridad}"
+                        
+                        if hasattr(tarea, 'tiempo_estimado') and tarea.tiempo_estimado:
+                            respuesta += f" | ⏱️ {tarea.tiempo_estimado}min"
                         
                         if hasattr(tarea, 'fecha_vencimiento') and tarea.fecha_vencimiento:
                             respuesta += f" | 📅 {tarea.fecha_vencimiento.strftime('%d/%m/%Y')}"
@@ -307,14 +326,37 @@ class LangGraphService:
             for tarea in tareas:
                 contexto += f"- {tarea['nombre']} ({tarea['estado']}) - {tarea['proyecto']}\n"
             
-            # Generar respuesta usando Gemini
+            # Generar respuesta usando Gemini con instrucciones específicas
+            prompt_completo = f"""Consulta: {consulta}
+
+Contexto:
+{contexto}
+
+INSTRUCCIONES:
+- Responde de forma natural y conversacional
+- USA formato Markdown para Telegram (negritas: *texto*, cursivas: _texto_)
+- NO uses caracteres especiales sin escapar
+- Estructura la respuesta con emojis y formato claro
+- Si hay muchas tareas, resume las más importantes
+- Incluye un tip útil al final
+
+Respuesta:"""
+            
             resultado = self.gemini_service.generar_texto_libre(
-                texto_prompt=f"Consulta: {consulta}\n\nContexto:\n{contexto}\n\nResponde de forma natural y conversacional:",
+                texto_prompt=prompt_completo,
                 temperatura=0.3
             )
             
-            if resultado.exitosa:
-                return resultado.texto
+            if resultado.exitosa and resultado.texto:
+                # Verificar que la respuesta no tenga caracteres problemáticos sin escapar
+                respuesta = resultado.texto.strip()
+                
+                # Si la respuesta tiene problemas de formato, usar fallback
+                if len(respuesta) > 4000 or '\\' in respuesta:
+                    print("⚠️ Respuesta IA demasiado larga o con caracteres problemáticos, usando fallback")
+                    return self._generar_respuesta_simple(tareas)
+                
+                return respuesta
             else:
                 # Fallback a respuesta simple
                 return self._generar_respuesta_simple(tareas)
@@ -323,18 +365,110 @@ class LangGraphService:
             print(f"⚠️ Error generando respuesta IA: {e}")
             return self._generar_respuesta_simple(tareas)
     
+    def _escape_markdown(self, texto: str) -> str:
+        """Escapa caracteres especiales para Markdown de Telegram"""
+        if not texto:
+            return ""
+        
+        # Caracteres que necesitan escape en Telegram Markdown
+        caracteres_especiales = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!']
+        
+        for char in caracteres_especiales:
+            texto = texto.replace(char, f'\\{char}')
+        
+        return texto
+    
     def _generar_respuesta_simple(self, tareas: List[Dict]) -> str:
-        """Genera respuesta simple sin IA"""
+        """Genera respuesta simple sin IA con texto safe para Telegram"""
         total = len(tareas)
-        respuesta = f"📊 Tienes {total} tarea{'s' if total != 1 else ''} registrada{'s' if total != 1 else ''}:\n\n"
+        respuesta = f"📊 *Tienes {total} tarea{'s' if total != 1 else ''} registrada{'s' if total != 1 else ''}:*\n\n"
         
         for tarea in tareas[:5]:  # Mostrar máximo 5
-            respuesta += f"• {tarea['nombre']} ({tarea['estado']}) - {tarea['proyecto']}\n"
+            # Escapar caracteres especiales para Markdown
+            nombre_safe = self._escape_markdown(tarea['nombre'])
+            estado_safe = self._escape_markdown(tarea['estado'])
+            proyecto_safe = self._escape_markdown(tarea['proyecto'])
+            
+            respuesta += f"• *{nombre_safe}* ({estado_safe})\n"
+            respuesta += f"  📁 {proyecto_safe}\n"
+            
+            if tarea['fecha'] != "Sin fecha":
+                fecha_safe = self._escape_markdown(tarea['fecha'])
+                respuesta += f"  📅 {fecha_safe}\n"
+            
+            respuesta += "\n"
         
         if total > 5:
-            respuesta += f"... y {total - 5} tarea{'s' if total - 5 != 1 else ''} más"
+            respuesta += f"... y *{total - 5}* tarea{'s' if total - 5 != 1 else ''} más\n\n"
+        
+        respuesta += "💡 _Usa 'crear tarea: [descripción]' para agregar nuevas tareas_"
         
         return respuesta
+    
+    # ===== NODO CREAR EVENTO =====
+    
+    def nodo_crear_evento(self, state: EliasState) -> EliasState:
+        """NODO: Crear nuevo evento usando servicios modulares"""
+        consulta = state["user_query"]
+        
+        try:
+            print("📅 Procesando creación de evento...")
+            
+            # Verificar si el servicio de eventos está disponible
+            if not self.eventos_service:
+                return {
+                    **state,
+                    "final_response": "❌ El servicio de eventos no está configurado. Añade NOTION_DB_EVENTOS en tu archivo .env",
+                    "processing_step": "error_config_eventos"
+                }
+            
+            # Crear evento usando el servicio inteligente
+            resultado = self.eventos_service.crear_evento_inteligente(consulta)
+            
+            if resultado and hasattr(resultado, 'nombre'):
+                respuesta = f"✅ **Evento creado exitosamente**\n\n"
+                respuesta += f"📅 **Nombre:** {resultado.nombre}\n"
+                respuesta += f"📌 **Tipo:** {resultado.tipo.value if hasattr(resultado.tipo, 'value') else resultado.tipo}\n"
+                respuesta += f"📊 **Estado:** {resultado.estado.value if hasattr(resultado.estado, 'value') else resultado.estado}\n"
+                
+                if hasattr(resultado, 'fecha') and resultado.fecha:
+                    respuesta += f"🗓️ **Fecha:** {resultado.fecha.strftime('%d/%m/%Y %H:%M')}\n"
+                
+                if hasattr(resultado, 'fecha_fin') and resultado.fecha_fin:
+                    respuesta += f"⏰ **Hasta:** {resultado.fecha_fin.strftime('%d/%m/%Y %H:%M')}\n"
+                
+                if hasattr(resultado, 'ubicacion') and resultado.ubicacion:
+                    respuesta += f"📍 **Ubicación:** {resultado.ubicacion}\n"
+                
+                if hasattr(resultado, 'id') and resultado.id:
+                    respuesta += f"🆔 **ID:** `{resultado.id}`\n"
+                
+                respuesta += f"\n💡 *Tip: Puedes decir 'reunión mañana a las 3pm' o 'cita con el doctor el viernes'*"
+                print(f"✅ Evento creado: {resultado.nombre}")
+                
+                return {
+                    **state,
+                    "final_response": respuesta,
+                    "processing_step": "evento_creado"
+                }
+            else:
+                respuesta = "❌ Error al crear el evento"
+                print(respuesta)
+                
+                return {
+                    **state,
+                    "final_response": respuesta,
+                    "processing_step": "error_creacion_evento"
+                }
+                
+        except Exception as e:
+            error_msg = f"❌ Error inesperado al crear evento: {e}"
+            print(error_msg)
+            return {
+                **state,
+                "final_response": error_msg,
+                "processing_step": "error_creacion_evento"
+            }
     
     # ===== FUNCIONES DE DECISIÓN =====
     
@@ -342,7 +476,12 @@ class LangGraphService:
         """Decide el siguiente nodo basado en la intención"""
         intencion = state.get("intencion", "consultar")
         
-        if intencion in ["crear", "nueva", "agregar"]:
+        # Normalizar la intención
+        intencion_lower = intencion.lower().replace("_", " ")
+        
+        if "crear_evento" in intencion or "crear evento" in intencion_lower or intencion_lower == "crear_evento":
+            return "crear_evento"
+        elif "crear_tarea" in intencion or "crear tarea" in intencion_lower or intencion in ["crear", "nueva", "agregar"]:
             return "crear_tarea"
         else:
             return "consultar_tareas"
@@ -360,6 +499,7 @@ class LangGraphService:
             # Añadir nodos
             workflow.add_node("decisor", self.nodo_decisor_intencion)
             workflow.add_node("crear_tarea", self.nodo_crear_tarea)
+            workflow.add_node("crear_evento", self.nodo_crear_evento)
             workflow.add_node("consultar_tareas", self.nodo_consultar_tareas)
             
             # Flujo condicional
@@ -369,13 +509,15 @@ class LangGraphService:
                 self.decidir_siguiente_nodo,
                 {
                     "crear_tarea": "crear_tarea",
+                    "crear_evento": "crear_evento",
                     "consultar_tareas": "consultar_tareas"
                 }
             )
             workflow.add_edge("crear_tarea", END)
+            workflow.add_edge("crear_evento", END)
             workflow.add_edge("consultar_tareas", END)
             
-            print("✅ Workflow de LangGraph compilado exitosamente")
+            print("✅ Workflow de LangGraph compilado exitosamente (con soporte de eventos)")
             return workflow.compile()
             
         except Exception as e:

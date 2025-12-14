@@ -335,7 +335,8 @@ class TareasService:
     
     def crear_tarea_desde_texto(self, titulo: str, prioridad: str = "Media", 
                                fecha: Optional[str] = None, estado: str = "Sin empezar", 
-                               proyectos: Optional[List[str]] = None) -> Optional[Tarea]:
+                               proyectos: Optional[List[str]] = None,
+                               tiempo_estimado: Optional[int] = None) -> Optional[Tarea]:
         """
         Crea una nueva tarea con parámetros de texto simples (helper para main.py)
         
@@ -344,7 +345,8 @@ class TareasService:
             prioridad: Prioridad como string ("Baja", "Media", "Alta", "Urgente") 
             fecha: Fecha como string YYYY-MM-DD
             estado: Estado como string 
-            proyectos: Lista de nombres/IDs de proyectos 
+            proyectos: Lista de nombres/IDs de proyectos
+            tiempo_estimado: Tiempo estimado en minutos
         
         Returns:
             Objeto Tarea creado o None si hay error
@@ -392,7 +394,8 @@ class TareasService:
                 prioridad=prioridad_enum,
                 estado=estado_enum,
                 fecha_vencimiento=fecha_vencimiento,
-                proyecto_ids=proyectos or []  # Recibe IDs ya resueltos
+                proyecto_ids=proyectos or [],  # Recibe IDs ya resueltos
+                tiempo_estimado=tiempo_estimado
             )
             
             # Crear usando el método estándar
@@ -402,6 +405,8 @@ class TareasService:
                 print(f"✅ Tarea creada exitosamente:")
                 print(f"   📝 Título: {titulo}")
                 print(f"   ⚡ Prioridad: {prioridad}")
+                if tiempo_estimado:
+                    print(f"   ⏱️ Tiempo estimado: {tiempo_estimado} min")
                 print(f"   🆔 ID: {tarea_creada.id}")
             
             return tarea_creada
@@ -464,7 +469,8 @@ class TareasService:
                         titulo=tarea_datos.get('titulo', 'Tarea sin título'),
                         prioridad=tarea_datos.get('prioridad', 'Media'),
                         fecha=tarea_datos.get('fecha_vencimiento'),
-                        proyectos=proyecto_ids
+                        proyectos=proyecto_ids,
+                        tiempo_estimado=tarea_datos.get('tiempo_estimado')
                     )
                     
                     if tarea_creada:

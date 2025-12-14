@@ -1,17 +1,18 @@
-# IA - Módulo de Inteligencia Artificial
+# 🧠 IA - Módulo de Inteligencia Artificial
 
-Este módulo integra servicios de IA avanzada incluyendo Google Gemini, LangChain y LangGraph para procesamiento de lenguaje natural y automatización inteligente.
+Este módulo integra servicios de IA avanzada usando **Google Gemini 2.5 Flash** y **LangGraph** para clasificación de intenciones, extracción de datos y orquestación de flujos de trabajo.
 
 ## 📁 Estructura
 
 ```
 ia/
 ├── __init__.py              # Inicialización del módulo
-├── README.md               # Esta documentación
-└── services/               # Servicios de IA
+├── README.md                # Esta documentación
+├── models.py                # Prompts y templates de IA
+└── services/                # Servicios de IA
     ├── __init__.py
-    ├── gemini_service.py   # Servicio Google Gemini
-    └── langgraph_service.py # Servicio LangGraph/LangChain
+    ├── gemini_service.py    # Servicio Google Gemini 2.5 Flash
+    └── langgraph_service.py # Servicio LangGraph con estado
 ```
 
 ## 🚀 Inicio Rápido
@@ -21,23 +22,48 @@ ia/
 ```python
 from ia.services import gemini_service
 from ia.services.langgraph_service import LangGraphService
+from ia.models import Prompt
 
-# Usar Gemini para respuestas rápidas
-respuesta = gemini_service.generar_respuesta("¿Cómo crear una tarea?")
+# Clasificar intención del usuario
+intencion = await gemini_service.clasificar_intencion(
+    "Crear tarea urgente: revisar código"
+)
+# Resultado: "CREAR_TAREA"
 
-# Usar LangGraph para flujos complejos (opcional)
-try:
-    langgraph = LangGraphService()
-    resultado = langgraph.procesar_consulta_compleja("Analiza mis tareas pendientes")
-except ImportError:
-    print("LangGraph no disponible - usando Gemini como fallback")
+# Usar LangGraph para flujos complejos
+langgraph = LangGraphService()
+resultado = await langgraph.procesar_mensaje("Agregar evento: cumpleaños de Juan mañana")
+```
+
+## 🎯 Sistema de Clasificación de Intenciones
+
+ELiaS usa un sistema de 4 intenciones para clasificar mensajes:
+
+| Intención | Descripción | Ejemplos |
+|-----------|-------------|----------|
+| `CREAR_TAREA` | Acciones que el usuario DEBE hacer | "Estudiar Python", "Terminar el informe" |
+| `CREAR_EVENTO` | Ocasiones a las que ASISTE | "Cumpleaños de Juan", "Reunión del equipo" |
+| `CONSULTAR` | Preguntas sobre datos existentes | "¿Cuántas tareas tengo?", "Mis eventos de hoy" |
+| `AMBIGUO` | Requiere más contexto | "Python", "Mañana" |
+
+### Criterios de Clasificación
+
+```
+CREAR_TAREA: Acciones personales que requieren ESFUERZO
+  ✓ Estudiar, Trabajar, Revisar, Completar, Hacer
+
+CREAR_EVENTO: Ocasiones sociales/programadas que ASISTES
+  ✓ Cumpleaños, Reuniones, Citas, Fiestas, Conferencias
+
+CONSULTAR: Preguntas sobre información existente
+  ✓ Palabras interrogativas: cuántas, cuáles, qué, lista
 ```
 
 ## 🤖 Servicios Disponibles
 
 ### GeminiService
 
-Servicio principal de IA usando Google Gemini para procesamiento de lenguaje natural.
+Servicio principal de IA usando Google Gemini 2.5 Flash para clasificación y extracción de datos.
 
 #### Configuración
 
@@ -49,7 +75,7 @@ service = GeminiService()
 
 # O configuración personalizada
 service = GeminiService(
-    model="gemini-2.0-flash",
+    model="gemini-2.5-flash",
     temperature=0.0,
     max_tokens=100000
 )
@@ -58,6 +84,32 @@ service = GeminiService(
 #### Métodos Principales
 
 ```python
+# Clasificar intención del mensaje
+intencion = await service.clasificar_intencion("Estudiar para el examen")
+# "CREAR_TAREA"
+
+# Extraer datos de tarea
+datos = await service.extraer_datos_tarea(
+    "Estudiar cálculo urgente para el viernes, unas 3 horas"
+)
+# {"nombre": "Estudiar cálculo", "prioridad": "Urgente", "fecha": "viernes", "tiempo_estimado": 3.0}
+
+# Extraer datos de evento
+datos = await service.extraer_datos_evento(
+    "Cumpleaños de mamá el 15 de mayo en su casa"
+)
+# {"nombre": "Cumpleaños de mamá", "fecha": "15 de mayo", "ubicacion": "su casa", "tipo": "Social"}
+
+# Generar respuesta a consulta
+respuesta = await service.generar_respuesta_consulta(
+    pregunta="¿Cuántas tareas pendientes tengo?",
+    contexto=lista_tareas
+)
+```
+
+### LangGraphService
+
+Servicio de orquestación con LangGraph para flujos de trabajo con estado.
 # Generar respuesta simple
 respuesta = gemini_service.generar_respuesta(
     prompt="Explica qué es una tarea",
@@ -77,40 +129,61 @@ contenido = gemini_service.generar_contenido_estructurado(
 )
 ```
 
-### LangGraphService (Opcional)
+### LangGraphService
 
-Servicio avanzado para flujos de trabajo complejos con LangChain y LangGraph.
+Servicio de orquestación con LangGraph para flujos de trabajo con estado.
 
-#### Instalación de Dependencias
+#### Arquitectura del Grafo
 
-```bash
-# Instalar dependencias opcionales de LangChain
-pip install langchain-google-genai langgraph langchain
+```
+                    ┌─────────────────┐
+                    │ clasificar_nodo │
+                    └────────┬────────┘
+                             │
+           ┌─────────────────┼─────────────────┐
+           │                 │                 │
+           ▼                 ▼                 ▼
+   ┌───────────────┐ ┌───────────────┐ ┌───────────────┐
+   │  crear_tarea  │ │ crear_evento  │ │   consultar   │
+   └───────────────┘ └───────────────┘ └───────────────┘
+           │                 │                 │
+           └─────────────────┴─────────────────┘
+                             │
+                             ▼
+                    ┌─────────────────┐
+                    │   responder     │
+                    └─────────────────┘
 ```
 
-#### Uso Básico
+#### Uso del Servicio
 
 ```python
 from ia.services.langgraph_service import LangGraphService
 
-try:
-    # Inicializar servicio
-    langgraph = LangGraphService()
-    
-    # Procesar consulta compleja
-    resultado = langgraph.procesar_consulta_compleja(
-        "Analiza mis tareas por prioridad y sugiere optimizaciones"
-    )
-    
-    # Generar plan de trabajo
-    plan = langgraph.generar_plan_trabajo(
-        objetivo="Completar proyecto antes del viernes",
-        tareas_disponibles=lista_tareas
-    )
-    
-except ImportError:
-    print("⚠️ LangGraph no disponible - usando Gemini como fallback")
+# Inicializar
+langgraph = LangGraphService()
+
+# Procesar mensaje (clasifica y ejecuta automáticamente)
+resultado = await langgraph.procesar_mensaje(
+    "Crear tarea urgente: revisar código para el viernes"
+)
+
+# El grafo automáticamente:
+# 1. Clasifica la intención → CREAR_TAREA
+# 2. Extrae datos (nombre, prioridad, fecha, tiempo_estimado)
+# 3. Crea la tarea en Notion
+# 4. Genera respuesta formateada
 ```
+
+#### Nodos Disponibles
+
+| Nodo | Función | Salida |
+|------|---------|--------|
+| `nodo_clasificar` | Clasifica intención con Gemini | Intención detectada |
+| `nodo_crear_tarea` | Extrae datos y crea tarea | Tarea creada |
+| `nodo_crear_evento` | Extrae datos y crea evento | Evento creado |
+| `nodo_consultar` | Busca información y responde | Respuesta formateada |
+| `nodo_pedir_clarificacion` | Solicita más contexto | Pregunta de clarificación |
 
 ## 💡 Ejemplos de Uso
 

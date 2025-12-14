@@ -1,1 +1,6 @@
 .env
+*.pyc
+telegram_bot.log
+__pycache__/
+elias_env/
+__pycache__ --- IGNORE ---

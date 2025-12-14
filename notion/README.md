@@ -1,26 +1,23 @@
-# Notion - Módulo de Integración con Notion
+# 📊 Notion - Módulo de Integración con Notion
 
-Este módulo proporciona una interfaz completa para interactuar with Notion, incluyendo gestión de tareas, proyectos y sincronización de datos.
+Este módulo proporciona una interfaz completa para interactuar con Notion, incluyendo gestión de **tareas**, **eventos** y **proyectos** con sincronización bidireccional.
 
 ## 📁 Estructura
 
 ```
 notion/
 ├── __init__.py              # Inicialización y exports principales
-├── README.md               # Esta documentación
-├── models.py               # Modelos de datos (Tarea, Proyecto)
-├── models/                 # Modelos específicos
+├── README.md                # Esta documentación
+├── models.py                # Modelos de datos (Tarea, Proyecto, Evento)
+├── services/                # Servicios de negocio
 │   ├── __init__.py
-│   ├── tarea.py           # Modelo Tarea
-│   └── proyecto.py        # Modelo Proyecto
-├── services/              # Servicios de negocio
-│   ├── __init__.py
-│   ├── tareas_service.py  # Gestión de tareas
-│   └── proyectos_service.py # Gestión de proyectos
-└── utils/                 # Utilidades y helpers
+│   ├── tareas_service.py    # Gestión de tareas
+│   ├── proyectos_service.py # Gestión de proyectos
+│   └── eventos_service.py   # Gestión de eventos (NEW)
+└── utils/                   # Utilidades y helpers
     ├── __init__.py
-    ├── notion_client.py   # Cliente base de Notion
-    └── notion_helpers.py  # Funciones auxiliares
+    ├── notion_client.py     # Cliente base de Notion
+    └── notion_helpers.py    # Funciones auxiliares
 ```
 
 ## 🚀 Inicio Rápido
@@ -28,26 +25,62 @@ notion/
 ### Configuración
 
 ```python
-from notion import tareas_service, proyectos_service
+from notion import tareas_service, proyectos_service, eventos_service
 
 # Los servicios se inicializan automáticamente
 # usando la configuración del módulo config
 ```
 
-### Operaciones Básicas
+### Operaciones con Tareas
 
 ```python
 # Obtener todas las tareas
 tareas = tareas_service.obtener_todas_las_tareas()
 
-# Crear nueva tarea
+# Crear nueva tarea con tiempo estimado
 nueva_tarea = tareas_service.crear_tarea_desde_texto(
     titulo="Estudiar Python",
     prioridad="Alta",
+    tiempo_estimado=2.5,  # Horas
     proyectos=["Programación"]
 )
 
-# Obtener proyectos
+# Crear tarea inteligente (extrae datos automáticamente)
+tarea = await tareas_service.crear_tarea_inteligente(
+    "Estudiar para el examen de cálculo, es urgente, para el viernes, unas 3 horas"
+)
+```
+
+### Operaciones con Eventos
+
+```python
+# Obtener todos los eventos
+eventos = eventos_service.obtener_todos_los_eventos()
+
+# Crear evento con ubicación
+evento = eventos_service.crear_evento(
+    nombre="Cumpleaños de Juan",
+    fecha="2024-12-15",
+    tipo="Social",
+    ubicacion="Casa de Juan"
+)
+
+# Crear evento inteligente (extrae datos automáticamente)
+evento = await eventos_service.crear_evento_inteligente(
+    "Cena de Navidad el 24 de diciembre a las 8pm en casa de la abuela"
+)
+
+# Obtener próximos eventos
+proximos = eventos_service.obtener_proximos_eventos(dias=7)
+
+# Eventos de hoy
+hoy = eventos_service.obtener_eventos_hoy()
+```
+
+### Operaciones con Proyectos
+
+```python
+# Obtener proyectos como diccionario
 proyectos = proyectos_service.cargar_proyectos_como_diccionario()
 ```
 
@@ -68,6 +101,7 @@ class Tarea:
     descripcion: str = ""
     estado: EstadoTarea = EstadoTarea.SIN_EMPEZAR
     prioridad: PrioridadTarea = PrioridadTarea.MEDIA
+    tiempo_estimado: Optional[float] = None  # Horas estimadas
     
     # Fechas
     fecha_creacion: Optional[datetime] = None
@@ -78,19 +112,61 @@ class Tarea:
     proyecto_ids: List[str] = field(default_factory=list)
 ```
 
+### Clase Evento (NEW)
+
+```python
+@dataclass
+class Evento:
+    """Modelo para un evento de Notion"""
+    # Identificadores
+    id: Optional[str] = None
+    url: Optional[str] = None
+    
+    # Propiedades principales
+    nombre: str = ""
+    descripcion: str = ""
+    estado: EstadoEvento = EstadoEvento.PROGRAMADO
+    tipo: TipoEvento = TipoEvento.OTROS
+    ubicacion: str = ""
+    
+    # Fechas
+    fecha: Optional[datetime] = None
+    fecha_fin: Optional[datetime] = None
+    
+    # Relaciones
+    proyecto_ids: List[str] = field(default_factory=list)
+```
+
 ### Enums Disponibles
 
 ```python
+# Estados de Tarea
 class EstadoTarea(Enum):
     SIN_EMPEZAR = "Sin empezar"
     EN_CURSO = "En curso"
     COMPLETADO = "Completado"
 
+# Prioridades de Tarea
 class PrioridadTarea(Enum):
     BAJA = "Baja"
     MEDIA = "Media"
     ALTA = "Alta"
     URGENTE = "Urgente"
+
+# Estados de Evento
+class EstadoEvento(Enum):
+    PROGRAMADO = "Programado"
+    EN_CURSO = "En curso"
+    FINALIZADO = "Finalizado"
+    CANCELADO = "Cancelado"
+
+# Tipos de Evento
+class TipoEvento(Enum):
+    PERSONAL = "Personal"
+    TRABAJO = "Trabajo"
+    SOCIAL = "Social"
+    ACADEMICO = "Académico"
+    OTROS = "Otros"
 ```
 
 ## 🔧 Servicios Disponibles
@@ -110,7 +186,13 @@ tarea = tareas_service.crear_tarea_desde_texto(
     titulo="Mi tarea",
     prioridad="Media",
     fecha="2024-12-31",
+    tiempo_estimado=2.5,  # Horas
     proyectos=["Proyecto1"]
+)
+
+# Crear tarea inteligente (usa IA)
+tarea = await tareas_service.crear_tarea_inteligente(
+    "Estudiar para el examen urgente, unas 3 horas para el viernes"
 )
 
 # Actualizar tareas
@@ -120,20 +202,31 @@ tarea_actualizada = tareas_service.actualizar_tarea(tarea_id, nuevos_datos)
 tareas_filtradas = tareas_service.buscar_tareas_por_estado(EstadoTarea.SIN_EMPEZAR)
 ```
 
-#### Filtros y Búsquedas
+### EventosService (NEW)
+
+#### Métodos Principales
 
 ```python
-# Por estado
-pendientes = tareas_service.buscar_tareas_por_estado(EstadoTarea.SIN_EMPEZAR)
+# Obtener eventos
+eventos = eventos_service.obtener_todos_los_eventos()
+evento = eventos_service.obtener_evento(evento_id)
 
-# Por prioridad
-urgentes = tareas_service.buscar_tareas_por_prioridad(PrioridadTarea.URGENTE)
+# Crear eventos
+evento = eventos_service.crear_evento(
+    nombre="Reunión de equipo",
+    fecha="2024-12-15T10:00:00",
+    tipo="Trabajo",
+    ubicacion="Sala de conferencias"
+)
 
-# Por proyecto
-del_proyecto = tareas_service.buscar_tareas_por_proyecto("Mi Proyecto")
+# Crear evento inteligente (usa IA)
+evento = await eventos_service.crear_evento_inteligente(
+    "Cumpleaños de mamá el 20 de enero en su casa"
+)
 
-# Búsqueda de texto
-encontradas = tareas_service.buscar_tareas("palabra clave")
+# Consultar eventos
+proximos = eventos_service.obtener_proximos_eventos(dias=7)
+hoy = eventos_service.obtener_eventos_hoy()
 ```
 
 ### ProyectosService

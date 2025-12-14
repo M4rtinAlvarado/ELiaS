@@ -1,4 +1,4 @@
-# Telegram Bot - Módulo del Bot de Telegram
+# 🤖 Telegram Bot - Módulo del Bot de Telegram
 
 Este módulo proporciona una interfaz completa de bot de Telegram para interactuar con ELiaS mediante conversaciones naturales, comandos y teclados interactivos.
 
@@ -7,12 +7,12 @@ Este módulo proporciona una interfaz completa de bot de Telegram para interactu
 ```
 telegram_bot/
 ├── __init__.py              # Inicialización y exports principales
-├── README.md               # Esta documentación
-├── bot.py                  # Clase principal EliasBot
-├── keyboards.py            # Teclados inline personalizados
-└── handlers/               # Manejadores de eventos
+├── README.md                # Esta documentación
+├── bot.py                   # Clase principal EliasBot
+├── keyboards.py             # Teclados inline personalizados
+└── handlers/                # Manejadores de eventos
     ├── __init__.py
-    ├── command_handlers.py  # Comandos del bot (/start, /help, etc.)
+    ├── command_handlers.py  # Comandos (/start, /help, /tareas, /eventos)
     ├── message_handlers.py  # Mensajes de texto y consultas
     └── callback_handlers.py # Botones inline y callbacks
 ```
@@ -35,8 +35,11 @@ python -m telegram_bot
 2. **Inicia conversación** con `/start`
 3. **Usa comandos o lenguaje natural**:
    - `/help` - Ver ayuda completa
+   - `/tareas` - Ver resumen de tareas
+   - `/eventos` - Ver próximos eventos
    - "¿Cuántas tareas tengo?" - Consulta natural
    - "Crear tarea: estudiar Python" - Crear tareas
+   - "Agregar evento: cumpleaños mañana" - Crear eventos
    - `/admin` - Panel de administración
 
 ## 🤖 Funcionalidades del Bot
@@ -45,29 +48,37 @@ python -m telegram_bot
 
 | Comando | Descripción | Ejemplo |
 |---------|-------------|---------|
-| `/start` | Mensaje de bienvenida y configuración inicial | `/start` |
+| `/start` | Mensaje de bienvenida | `/start` |
 | `/help` | Ayuda completa con todos los comandos | `/help` |
 | `/tareas` | Ver resumen de todas las tareas | `/tareas` |
+| `/eventos` | Ver próximos eventos | `/eventos` |
 | `/proyectos` | Listar proyectos disponibles | `/proyectos` |
 | `/stats` | Estadísticas del sistema | `/stats` |
+| `/optstats` | Estadísticas de optimización | `/optstats` |
 | `/admin` | Panel de administración (solo admins) | `/admin` |
 
 ### Consultas en Lenguaje Natural
 
-El bot entiende consultas conversacionales:
+El bot entiende y clasifica automáticamente tus mensajes:
 
 ```
-Usuario: "¿Cuántas tareas tengo pendientes?"
+🎯 CREAR TAREAS:
+Usuario: "Estudiar para el examen de cálculo, urgente, 3 horas"
+Bot: "✅ Tarea creada: Estudiar para el examen de cálculo
+     🔴 Urgente | ⏱️ 3h estimadas"
+
+📅 CREAR EVENTOS:
+Usuario: "Cumpleaños de mamá el 15 de mayo en su casa"
+Bot: "✅ Evento creado: Cumpleaños de mamá
+     📅 15/05/2024 | 📍 Su casa | 🎉 Social"
+
+❓ CONSULTAS:
+Usuario: "¿Cuántas tareas pendientes tengo?"
 Bot: "📋 Tienes 5 tareas pendientes"
 
-Usuario: "Crear tarea: revisar código del proyecto web"
-Bot: "✅ Tarea creada: revisar código del proyecto web"
-
-Usuario: "Mis proyectos activos"
-Bot: "📁 Proyectos activos:
-     • Desarrollo Web
-     • Estudio Personal
-     • CEE 2025"
+🤔 AMBIGUO:
+Usuario: "Python"
+Bot: "🤔 No estoy seguro. ¿Podrías ser más específico?"
 ```
 
 ### Teclados Interactivos
@@ -76,6 +87,7 @@ El bot incluye teclados personalizados para navegación fácil:
 
 - **Menú Principal**: Acceso rápido a funciones principales
 - **Gestión de Tareas**: Crear, ver, filtrar tareas
+- **Gestión de Eventos**: Ver eventos, próximos, hoy
 - **Panel de Admin**: Funciones administrativas
 - **Configuración**: Ajustes del usuario
 

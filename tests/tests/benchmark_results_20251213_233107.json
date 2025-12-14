@@ -1,0 +1,664 @@
+{
+  "metadata": {
+    "timestamp": "2025-12-13T23:31:07.461718",
+    "total_queries": 39,
+    "save_to_notion": false
+  },
+  "stats": {
+    "total": 39,
+    "exitosas": 6,
+    "fallidas": 33,
+    "por_categoria": {
+      "crear_tarea": {
+        "total": 11,
+        "exitosas": 6,
+        "coinciden": 6
+      },
+      "crear_evento": {
+        "total": 9,
+        "exitosas": 0,
+        "coinciden": 0
+      },
+      "consultar": {
+        "total": 10,
+        "exitosas": 0,
+        "coinciden": 0
+      },
+      "ambiguo": {
+        "total": 6,
+        "exitosas": 0,
+        "coinciden": 0
+      },
+      "mixto": {
+        "total": 3,
+        "exitosas": 0,
+        "coinciden": 0
+      }
+    },
+    "por_intencion_detectada": {
+      "CREAR_TAREA": 6
+    },
+    "tiempo_total": 2264.6435034275055,
+    "tiempo_promedio": 58.06778213916681
+  },
+  "results": [
+    {
+      "query": "Tengo que estudiar matemáticas mañana",
+      "categoria_esperada": "crear_tarea",
+      "timestamp": "2025-12-13T22:53:22.786299",
+      "clasificacion": {
+        "intencion": "CREAR_TAREA",
+        "confianza": 95,
+        "razonamiento": "El usuario utiliza la frase 'Tengo que' que es un indicador clave de una obligación o una acción que debe realizar. El verbo 'estudiar' es una acción clara y no se especifica una hora concreta, solo el día ('mañana'), lo que lo clasifica como una tarea pendiente y no como un evento con una cita fija.",
+        "exitosa": true
+      },
+      "respuesta_completa": "✅ **Tarea creada exitosamente**\n\n📝 **Título:** Estudiar matemáticas\n⚡ **Prioridad:** Alta\n📊 **Estado:** Sin empezar\n📅 **Vencimiento:** 14/12/2025\n📁 **Proyecto:** 240b849f-59fd-808d-b7ad-c0615682e6ec\n🆔 **ID:** `2c9b849f-59fd-8127-8690-d36042685155`\n\n\n💡 *Tip: Ahora puedes usar lenguaje natural como 'estudiar matemáticas mañana por 2 horas'*",
+      "tiempo_clasificacion": 5.03242039680481,
+      "tiempo_total": 14.606575012207031,
+      "exitosa": true
+    },
+    {
+      "query": "Comprar leche y pan",
+      "categoria_esperada": "crear_tarea",
+      "timestamp": "2025-12-13T22:53:37.392975",
+      "clasificacion": {
+        "intencion": "CREAR_TAREA",
+        "confianza": 95,
+        "razonamiento": "El texto 'Comprar leche y pan' describe una acción que el usuario debe realizar ('Comprar') y no incluye ninguna indicación de fecha u hora específica, lo cual es característico de una tarea. El verbo 'comprar' es un claro indicador de acción.",
+        "exitosa": true
+      },
+      "respuesta_completa": "✅ **2 tareas creadas exitosamente**\n\n**1.** Comprar leche\n   ⚡ Media | 📁 240b849f-59fd-8035-9e0c-e72799d2421a\n   🆔 ID: `2c9b849f-59fd-8135-b8ca-ed53c93cabfe`\n\n**2.** Comprar pan\n   ⚡ Media | 📁 240b849f-59fd-8035-9e0c-e72799d2421a\n   🆔 ID: `2c9b849f-59fd-81a3-8cad-cd4c45b91a4b`\n\n",
+      "tiempo_clasificacion": 2.879287004470825,
+      "tiempo_total": 15.565254211425781,
+      "exitosa": true
+    },
+    {
+      "query": "Necesito llamar al doctor esta semana",
+      "categoria_esperada": "crear_tarea",
+      "timestamp": "2025-12-13T22:53:52.958331",
+      "clasificacion": {
+        "intencion": "CREAR_TAREA",
+        "confianza": 95,
+        "razonamiento": "El usuario expresa la necesidad de realizar una acción ('Necesito llamar al doctor'). 'Necesito' es un indicador directo de CREAR_TAREA. 'Llamar' es un verbo de acción. Aunque se menciona un plazo ('esta semana'), no se especifica una fecha y hora concretas para una cita o evento, lo que lo distingue claramente de un EVENTO y lo clasifica como una tarea pendiente a realizar dentro de ese período.",
+        "exitosa": true
+      },
+      "respuesta_completa": "✅ **Tarea creada exitosamente**\n\n📝 **Título:** Llamar al doctor\n⚡ **Prioridad:** Alta\n📊 **Estado:** Sin empezar\n📅 **Vencimiento:** 14/12/2025\n📁 **Proyecto:** 240b849f-59fd-8035-9e0c-e72799d2421a\n🆔 **ID:** `2c9b849f-59fd-815a-90c7-f25ea345f857`\n\n\n💡 *Tip: Ahora puedes usar lenguaje natural como 'estudiar matemáticas mañana por 2 horas'*",
+      "tiempo_clasificacion": 35.37883687019348,
+      "tiempo_total": 46.885751247406006,
+      "exitosa": true
+    },
+    {
+      "query": "Hacer ejercicio 30 minutos",
+      "categoria_esperada": "crear_tarea",
+      "timestamp": "2025-12-13T22:54:39.844177",
+      "clasificacion": {
+        "intencion": "CREAR_TAREA",
+        "confianza": 95,
+        "razonamiento": "El usuario expresa una acción ('Hacer ejercicio') que debe realizar, lo cual se alinea con la definición de una tarea. El verbo 'Hacer' es un indicador claro de una acción pendiente. La mención de '30 minutos' especifica la duración de la tarea, no una hora de inicio o fin fija que lo clasificaría como un evento.",
+        "exitosa": true
+      },
+      "respuesta_completa": "✅ **Tarea creada exitosamente**\n\n📝 **Título:** Hacer ejercicio\n⚡ **Prioridad:** Media\n📊 **Estado:** Sin empezar\n📁 **Proyecto:** 240b849f-59fd-8035-9e0c-e72799d2421a\n🆔 **ID:** `2c9b849f-59fd-81f0-bf01-f9535c7ba15a`\n\n\n💡 *Tip: Ahora puedes usar lenguaje natural como 'estudiar matemáticas mañana por 2 horas'*",
+      "tiempo_clasificacion": 5.098076581954956,
+      "tiempo_total": 13.363199234008789,
+      "exitosa": true
+    },
+    {
+      "query": "Para la universidad: entregar trabajo de historia",
+      "categoria_esperada": "crear_tarea",
+      "timestamp": "2025-12-13T22:54:53.207449",
+      "clasificacion": {
+        "intencion": "CREAR_TAREA",
+        "confianza": 95,
+        "razonamiento": "El texto describe una acción ('entregar trabajo de historia') que el usuario debe realizar, lo cual es la definición principal de una TAREA. La frase 'Para la universidad' indica un contexto o proyecto, que es un indicador de CREAR_TAREA. No se menciona ninguna hora o fecha específica, lo que lo distingue claramente de un EVENTO.",
+        "exitosa": true
+      },
+      "respuesta_completa": "✅ **Tarea creada exitosamente**\n\n📝 **Título:** Entregar trabajo de historia\n⚡ **Prioridad:** Media\n📊 **Estado:** Sin empezar\n📁 **Proyecto:** 240b849f-59fd-808d-b7ad-c0615682e6ec\n🆔 **ID:** `2c9b849f-59fd-814f-adb6-c09c45af8d00`\n\n\n💡 *Tip: Ahora puedes usar lenguaje natural como 'estudiar matemáticas mañana por 2 horas'*",
+      "tiempo_clasificacion": 3.5192952156066895,
+      "tiempo_total": 44.609591007232666,
+      "exitosa": true
+    },
+    {
+      "query": "Proyecto personal: organizar el closet",
+      "categoria_esperada": "crear_tarea",
+      "timestamp": "2025-12-13T22:55:37.817456",
+      "clasificacion": {
+        "intencion": "CREAR_TAREA",
+        "confianza": 95,
+        "razonamiento": "El usuario expresa una acción ('organizar el closet') que debe realizar como parte de un 'Proyecto personal'. Se detecta un verbo de acción ('organizar') y la mención de un proyecto, sin ninguna indicación de fecha u hora específica que lo clasifique como evento.",
+        "exitosa": true
+      },
+      "respuesta_completa": "❌ Error en workflow LangGraph: 'NoneType' object has no attribute 'lower'",
+      "tiempo_clasificacion": 3.530770778656006,
+      "tiempo_total": 6.849720001220703,
+      "exitosa": true
+    },
+    {
+      "query": "Urgente: revisar el código del proyecto",
+      "categoria_esperada": "crear_tarea",
+      "timestamp": "2025-12-13T22:55:44.667307",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 11.587732643s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 11\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 63.87737154960632,
+      "tiempo_total": 63.877373933792114,
+      "exitosa": false
+    },
+    {
+      "query": "Tarea importante: preparar presentación",
+      "categoria_esperada": "crear_tarea",
+      "timestamp": "2025-12-13T22:56:48.544919",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 7.385379558s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 7\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.18606281280518,
+      "tiempo_total": 64.18606495857239,
+      "exitosa": false
+    },
+    {
+      "query": "Estudiar física por 2 horas",
+      "categoria_esperada": "crear_tarea",
+      "timestamp": "2025-12-13T22:57:52.731093",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 3.301430548s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 3\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.07520341873169,
+      "tiempo_total": 64.07520627975464,
+      "exitosa": false
+    },
+    {
+      "query": "Revisar documentación durante 45 minutos",
+      "categoria_esperada": "crear_tarea",
+      "timestamp": "2025-12-13T22:58:56.806352",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 59.092239015s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 59\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.32813763618469,
+      "tiempo_total": 64.32814002037048,
+      "exitosa": false
+    },
+    {
+      "query": "Necesito comprar vitaminas y hacer ejercicio mañana",
+      "categoria_esperada": "crear_tarea",
+      "timestamp": "2025-12-13T23:00:01.134542",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 54.570232627s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 54\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.42995476722717,
+      "tiempo_total": 64.43000841140747,
+      "exitosa": false
+    },
+    {
+      "query": "Reunión con el equipo mañana a las 3pm",
+      "categoria_esperada": "crear_evento",
+      "timestamp": "2025-12-13T23:01:05.566743",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 49.98672261s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 49\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.58934092521667,
+      "tiempo_total": 64.58934426307678,
+      "exitosa": false
+    },
+    {
+      "query": "Cita con el doctor el viernes a las 10am",
+      "categoria_esperada": "crear_evento",
+      "timestamp": "2025-12-13T23:02:10.157876",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 45.797718199s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 45\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.15220212936401,
+      "tiempo_total": 64.15220546722412,
+      "exitosa": false
+    },
+    {
+      "query": "Clase de inglés mañana de 5 a 7 de la tarde",
+      "categoria_esperada": "crear_evento",
+      "timestamp": "2025-12-13T23:03:14.310377",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 41.285964907s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 41\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.54497241973877,
+      "tiempo_total": 64.54497456550598,
+      "exitosa": false
+    },
+    {
+      "query": "El cumpleaños de Juan es el sábado",
+      "categoria_esperada": "crear_evento",
+      "timestamp": "2025-12-13T23:04:18.855483",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 37.038818969s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 37\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.23834896087646,
+      "tiempo_total": 64.23840022087097,
+      "exitosa": false
+    },
+    {
+      "query": "Fiesta de navidad el 24 de diciembre",
+      "categoria_esperada": "crear_evento",
+      "timestamp": "2025-12-13T23:05:23.094644",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 32.947786019s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 32\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.08913326263428,
+      "tiempo_total": 64.08938646316528,
+      "exitosa": false
+    },
+    {
+      "query": "Examen de cálculo el lunes a las 8am",
+      "categoria_esperada": "crear_evento",
+      "timestamp": "2025-12-13T23:06:27.185072",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 28.778670134s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 28\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.14709854125977,
+      "tiempo_total": 64.14710140228271,
+      "exitosa": false
+    },
+    {
+      "query": "Exposición del proyecto el miércoles a las 2pm",
+      "categoria_esperada": "crear_evento",
+      "timestamp": "2025-12-13T23:07:31.332776",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 24.347718087s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 24\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.43168115615845,
+      "tiempo_total": 64.43169283866882,
+      "exitosa": false
+    },
+    {
+      "query": "Reunión en la oficina central mañana a las 9",
+      "categoria_esperada": "crear_evento",
+      "timestamp": "2025-12-13T23:08:35.764885",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 19.958617066s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 19\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.37990403175354,
+      "tiempo_total": 64.37990617752075,
+      "exitosa": false
+    },
+    {
+      "query": "Cita en el hospital Santa María el jueves a las 11",
+      "categoria_esperada": "crear_evento",
+      "timestamp": "2025-12-13T23:09:40.144923",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 15.593334265s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 15\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.40414476394653,
+      "tiempo_total": 64.40414690971375,
+      "exitosa": false
+    },
+    {
+      "query": "¿Cuántas tareas tengo pendientes?",
+      "categoria_esperada": "consultar",
+      "timestamp": "2025-12-13T23:10:44.550424",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 11.345945258s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 11\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.21415662765503,
+      "tiempo_total": 64.21416306495667,
+      "exitosa": false
+    },
+    {
+      "query": "Muéstrame todas mis tareas",
+      "categoria_esperada": "consultar",
+      "timestamp": "2025-12-13T23:11:48.764820",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 7.107255491s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 7\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.25736927986145,
+      "tiempo_total": 64.25737118721008,
+      "exitosa": false
+    },
+    {
+      "query": "¿Qué tareas tengo para hoy?",
+      "categoria_esperada": "consultar",
+      "timestamp": "2025-12-13T23:12:53.022242",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 2.765830898s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 2\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.34380030632019,
+      "tiempo_total": 64.34387040138245,
+      "exitosa": false
+    },
+    {
+      "query": "Listar tareas del proyecto Universidad",
+      "categoria_esperada": "consultar",
+      "timestamp": "2025-12-13T23:13:57.367832",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 58.578201327s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 58\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.1919629573822,
+      "tiempo_total": 64.19196629524231,
+      "exitosa": false
+    },
+    {
+      "query": "¿Qué eventos tengo esta semana?",
+      "categoria_esperada": "consultar",
+      "timestamp": "2025-12-13T23:15:01.561542",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 54.231211986s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 54\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.33163905143738,
+      "tiempo_total": 64.33172011375427,
+      "exitosa": false
+    },
+    {
+      "query": "Próximos eventos",
+      "categoria_esperada": "consultar",
+      "timestamp": "2025-12-13T23:16:05.894425",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 49.750840818s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 49\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.49131894111633,
+      "tiempo_total": 64.49134421348572,
+      "exitosa": false
+    },
+    {
+      "query": "¿Tengo alguna reunión programada?",
+      "categoria_esperada": "consultar",
+      "timestamp": "2025-12-13T23:17:10.386059",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 45.347944998s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 45\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.50351595878601,
+      "tiempo_total": 64.50351762771606,
+      "exitosa": false
+    },
+    {
+      "query": "Dame un resumen de mis tareas",
+      "categoria_esperada": "consultar",
+      "timestamp": "2025-12-13T23:18:14.889654",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 41.074078806s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 41\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.16753697395325,
+      "tiempo_total": 64.16753888130188,
+      "exitosa": false
+    },
+    {
+      "query": "¿Cuáles son mis proyectos?",
+      "categoria_esperada": "consultar",
+      "timestamp": "2025-12-13T23:19:19.057486",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 36.488087939s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 36\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.56267189979553,
+      "tiempo_total": 64.56267309188843,
+      "exitosa": false
+    },
+    {
+      "query": "Estado del sistema",
+      "categoria_esperada": "consultar",
+      "timestamp": "2025-12-13T23:20:23.620225",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 32.299312661s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 32\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.21323442459106,
+      "tiempo_total": 64.21323704719543,
+      "exitosa": false
+    },
+    {
+      "query": "Hola",
+      "categoria_esperada": "ambiguo",
+      "timestamp": "2025-12-13T23:21:27.833958",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 27.99341773s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 27\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.29897952079773,
+      "tiempo_total": 64.2989821434021,
+      "exitosa": false
+    },
+    {
+      "query": "Buenos días",
+      "categoria_esperada": "ambiguo",
+      "timestamp": "2025-12-13T23:22:32.133175",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 23.39558498s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 23\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.58045506477356,
+      "tiempo_total": 64.58045768737793,
+      "exitosa": false
+    },
+    {
+      "query": "¿Qué tal?",
+      "categoria_esperada": "ambiguo",
+      "timestamp": "2025-12-13T23:23:36.713706",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 19.13815453s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 19\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.33848166465759,
+      "tiempo_total": 64.33853721618652,
+      "exitosa": false
+    },
+    {
+      "query": "¿Qué puedes hacer?",
+      "categoria_esperada": "ambiguo",
+      "timestamp": "2025-12-13T23:24:41.054027",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14.61565146s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 14\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.47397637367249,
+      "tiempo_total": 64.47407627105713,
+      "exitosa": false
+    },
+    {
+      "query": "Ayuda",
+      "categoria_esperada": "ambiguo",
+      "timestamp": "2025-12-13T23:25:45.530422",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 10.235950829s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 10\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.40605044364929,
+      "tiempo_total": 64.40618085861206,
+      "exitosa": false
+    },
+    {
+      "query": "¿Cómo funciona esto?",
+      "categoria_esperada": "ambiguo",
+      "timestamp": "2025-12-13T23:26:49.939101",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 5.808222102s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 5\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.48395156860352,
+      "tiempo_total": 64.4839539527893,
+      "exitosa": false
+    },
+    {
+      "query": "Tengo examen mañana a las 8, necesito estudiar hoy 3 horas",
+      "categoria_esperada": "mixto",
+      "timestamp": "2025-12-13T23:27:54.424717",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 1.363374769s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 1\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.34888744354248,
+      "tiempo_total": 64.34890294075012,
+      "exitosa": false
+    },
+    {
+      "query": "Reunión el viernes y preparar documentos para ella",
+      "categoria_esperada": "mixto",
+      "timestamp": "2025-12-13T23:28:58.774116",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 56.867766695s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 56\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.53412771224976,
+      "tiempo_total": 64.53426361083984,
+      "exitosa": false
+    },
+    {
+      "query": "¿Cuántas tareas tengo? También agrega comprar café",
+      "categoria_esperada": "mixto",
+      "timestamp": "2025-12-13T23:30:03.310150",
+      "clasificacion": {
+        "intencion": "AMBIGUO",
+        "confianza": 0,
+        "razonamiento": "Error en el procesamiento",
+        "exitosa": false,
+        "error": "429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 52.679331351s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 52\n}\n]"
+      },
+      "respuesta_completa": null,
+      "tiempo_clasificacion": 64.1466920375824,
+      "tiempo_total": 64.14670419692993,
+      "exitosa": false
+    }
+  ]
+}

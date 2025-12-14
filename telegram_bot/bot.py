@@ -20,8 +20,24 @@ from telegram.ext import (
 
 # Importar servicios existentes de ELiaS
 from config import settings
-from ia.services import LangGraphService
 from notion import tareas_service, proyectos_service
+
+# Importar sistema de optimización
+try:
+    from core.optimization import (
+        local_response_matcher,
+        message_debouncer,
+        response_cache,
+        LazyLoader,
+        get_optimization_stats
+    )
+    OPTIMIZATION_ENABLED = True
+    lazy_loader = LazyLoader()
+except ImportError:
+    OPTIMIZATION_ENABLED = False
+    local_response_matcher = None
+    message_debouncer = None
+    lazy_loader = None
 
 # Importar handlers locales
 from .handlers.commands import CommandHandlers
@@ -35,6 +51,74 @@ logging.basicConfig(
     level=logging.INFO
 )
 logger = logging.getLogger(__name__)
+
+
+def _get_attr_value(obj, attr: str, default=""):
+    """Helper para obtener valor de atributo (soporta enums)."""
+    val = getattr(obj, attr, None)
+    if val is None:
+        return default
+    return val.value if hasattr(val, 'value') else val
+
+
+def _format_tarea(tarea, compact: bool = False) -> str:
+    """Formatea una tarea para mostrar al usuario."""
+    prioridad = _get_attr_value(tarea, 'prioridad', 'Normal')
+    estado = _get_attr_value(tarea, 'estado', 'Pendiente')
+    fecha = getattr(tarea, 'fecha_vencimiento', None)
+    proyecto_ids = getattr(tarea, 'proyecto_ids', None)
+    tiempo_estimado = getattr(tarea, 'tiempo_estimado', None)
+    
+    if compact:
+        linea = f"⚡ {prioridad}"
+        if fecha:
+            linea += f" | 📅 {fecha.strftime('%d/%m/%Y')}"
+        if tiempo_estimado:
+            linea += f" | ⏱️ {tiempo_estimado}min"
+        if proyecto_ids:
+            linea += f" | 📁 {proyecto_ids[0]}"
+        return linea
+    
+    # Formato completo
+    resp = f"📝 **Título:** {tarea.nombre}\n"
+    resp += f"⚡ **Prioridad:** {prioridad}\n"
+    resp += f"📊 **Estado:** {estado}\n"
+    if tiempo_estimado:
+        resp += f"⏱️ **Tiempo Estimado:** {tiempo_estimado} min\n"
+    if fecha:
+        resp += f"📅 **Vencimiento:** {fecha.strftime('%d/%m/%Y')}\n"
+    if proyecto_ids:
+        resp += f"📁 **Proyecto:** {proyecto_ids[0]}\n"
+    resp += f"🆔 **ID:** `{tarea.id}`\n"
+    return resp
+
+
+def _format_evento(evento, compact: bool = False) -> str:
+    """Formatea un evento para mostrar al usuario."""
+    tipo = _get_attr_value(evento, 'tipo', 'Otro')
+    estado = _get_attr_value(evento, 'estado', 'Programado')
+    fecha = getattr(evento, 'fecha', None)
+    ubicacion = getattr(evento, 'ubicacion', None)
+    
+    if compact:
+        linea = f"📌 {tipo}"
+        if fecha:
+            linea += f" | 🗓️ {fecha.strftime('%d/%m/%Y %H:%M')}"
+        if ubicacion:
+            linea += f" | 📍 {ubicacion}"
+        return linea
+    
+    # Formato completo
+    resp = f"📅 **Evento:** {evento.nombre}\n"
+    resp += f"📌 **Tipo:** {tipo}\n"
+    resp += f"📊 **Estado:** {estado}\n"
+    if fecha:
+        resp += f"🗓️ **Fecha:** {fecha.strftime('%d/%m/%Y %H:%M')}\n"
+    if ubicacion:
+        resp += f"📍 **Ubicación:** {ubicacion}\n"
+    resp += f"🆔 **ID:** `{evento.id}`\n"
+    return resp
+
 
 class EliasBot:
     """
@@ -91,15 +175,26 @@ class EliasBot:
         return user_id in self.admin_ids
     
     def initialize_services(self):
-        """Inicializar servicios de ELiaS de forma síncrona"""
+        """Inicializar servicios de ELiaS con lazy loading"""
         try:
-            # Intentar inicializar LangGraphService (opcional)
-            try:
-                self.langgraph_service = LangGraphService()
-                logger.info("✅ LangGraphService inicializado")
-            except Exception as e:
-                logger.warning(f"⚠️ LangGraphService no disponible: {e}")
-                self.langgraph_service = None
+            # Usar lazy loading para LangGraphService (carga bajo demanda)
+            if OPTIMIZATION_ENABLED and lazy_loader:
+                try:
+                    self.langgraph_service = lazy_loader.get_langgraph_service()
+                    if self.langgraph_service:
+                        logger.info("✅ LangGraphService disponible (lazy loading)")
+                except Exception as e:
+                    logger.warning(f"⚠️ LangGraphService no disponible: {e}")
+                    self.langgraph_service = None
+            else:
+                # Fallback: carga directa
+                try:
+                    from ia.services import LangGraphService
+                    self.langgraph_service = LangGraphService()
+                    logger.info("✅ LangGraphService inicializado (directo)")
+                except Exception as e:
+                    logger.warning(f"⚠️ LangGraphService no disponible: {e}")
+                    self.langgraph_service = None
             
             # Verificar servicios críticos de Notion
             if not tareas_service:
@@ -107,6 +202,10 @@ class EliasBot:
             
             if not proyectos_service:
                 logger.warning("⚠️ ProyectosService no disponible")
+            
+            # Log de optimizaciones activas
+            if OPTIMIZATION_ENABLED:
+                logger.info("🚀 Optimizaciones activas: Caché, Debouncing, Lazy Loading")
             
             logger.info("✅ Servicios básicos inicializados para Telegram")
             return True
@@ -146,21 +245,9 @@ class EliasBot:
                     # Usar el método inteligente también en fallback
                     nueva_tarea = tareas_service.crear_tarea_inteligente(titulo)
                     if nueva_tarea:
-                        if isinstance(nueva_tarea, list):
-                            tarea = nueva_tarea[0]  # Tomar la primera si hay múltiples
-                        else:
-                            tarea = nueva_tarea
-                            
+                        tarea = nueva_tarea[0] if isinstance(nueva_tarea, list) else nueva_tarea
                         respuesta = f"✅ **Tarea creada:** {tarea.nombre}\n"
-                        respuesta += f"⚡ **Prioridad:** {tarea.prioridad.value if hasattr(tarea.prioridad, 'value') else tarea.prioridad}\n"
-                        
-                        if hasattr(tarea, 'fecha_vencimiento') and tarea.fecha_vencimiento:
-                            respuesta += f"📅 **Vencimiento:** {tarea.fecha_vencimiento.strftime('%d/%m/%Y')}\n"
-                        
-                        if hasattr(tarea, 'proyecto_ids') and tarea.proyecto_ids:
-                            respuesta += f"📁 **Proyecto:** {tarea.proyecto_ids[0]}\n"
-                            
-                        respuesta += f"🆔 **ID:** `{tarea.id}`\n"
+                        respuesta += _format_tarea(tarea)
                         
                         # Agregar link a Notion
                         if hasattr(settings, 'NOTION_DB_TAREAS') and settings.NOTION_DB_TAREAS:
@@ -172,6 +259,55 @@ class EliasBot:
                         return "❌ Error creando la tarea"
                 else:
                     return "💡 Usa el formato: 'crear tarea: hacer ejercicio'"
+            
+            elif "crear evento" in query_lower:
+                # Extraer datos del evento
+                if ":" in query:
+                    descripcion = query.split(":", 1)[1].strip()
+                else:
+                    descripcion = query.replace("crear evento", "", 1).strip()
+                
+                if descripcion:
+                    try:
+                        from notion.services.eventos_service import eventos_service
+                        if eventos_service:
+                            nuevo_evento = eventos_service.crear_evento_inteligente(descripcion)
+                            if nuevo_evento:
+                                respuesta = f"✅ **Evento creado:** {nuevo_evento.nombre}\n"
+                                respuesta += f"📌 **Tipo:** {nuevo_evento.tipo.value}\n"
+                                if nuevo_evento.fecha:
+                                    respuesta += f"🗓️ **Fecha:** {nuevo_evento.fecha.strftime('%d/%m/%Y %H:%M')}\n"
+                                if nuevo_evento.ubicacion:
+                                    respuesta += f"📍 **Ubicación:** {nuevo_evento.ubicacion}\n"
+                                return respuesta
+                            else:
+                                return "❌ Error creando el evento"
+                        else:
+                            return "❌ Servicio de eventos no configurado. Añade NOTION_DB_EVENTOS en .env"
+                    except Exception as e:
+                        return f"❌ Error con eventos: {e}"
+                else:
+                    return "💡 Usa el formato: 'crear evento: reunión mañana a las 3pm'"
+            
+            elif "eventos" in query_lower or "próximos" in query_lower:
+                try:
+                    from notion.services.eventos_service import eventos_service
+                    if eventos_service:
+                        eventos = eventos_service.obtener_proximos_eventos(7)
+                        if eventos:
+                            respuesta = f"📅 **Próximos {len(eventos)} eventos:**\n\n"
+                            for i, e in enumerate(eventos[:5], 1):
+                                respuesta += f"{i}. **{e.nombre}**\n"
+                                if e.fecha:
+                                    respuesta += f"   🗓️ {e.fecha.strftime('%d/%m/%Y %H:%M')}\n"
+                                respuesta += f"   📌 {e.tipo.value}\n"
+                            return respuesta
+                        else:
+                            return "📭 No tienes eventos próximos en los siguientes 7 días"
+                    else:
+                        return "❌ Servicio de eventos no configurado"
+                except Exception as e:
+                    return f"❌ Error consultando eventos: {e}"
             
             elif "proyectos" in query_lower:
                 proyectos = proyectos_service.cargar_proyectos_como_diccionario()
@@ -188,14 +324,16 @@ class EliasBot:
 
 💡 **Comandos disponibles:**
 • "¿Cuántas tareas tengo?"
-• "Crear tarea: [descripción]"  
+• "Crear tarea: [descripción]"
+• "Crear evento: [descripción]"
 • "Mis proyectos"
 • "Tareas pendientes"
+• "Eventos próximos"
 
-🔥 **Nuevo:** Ahora puedes crear tareas con lenguaje natural:
-• "Tengo que estudiar matemáticas mañana"
-• "Comprar leche para la cena"
-• "Llamar al dentista en una semana"
+🔥 **Nuevo:** Ahora puedes usar lenguaje natural:
+• "Tengo que estudiar matemáticas mañana" → Crea tarea
+• "Reunión con el equipo el viernes a las 3pm" → Crea evento
+• "Cita con el doctor el lunes a las 10" → Crea evento
 """
             
         except Exception as e:
@@ -215,6 +353,13 @@ class EliasBot:
         """
         try:
             logger.info(f"🔄 Procesando consulta de usuario {user_id}: {query[:50]}...")
+            
+            # 1. OPTIMIZACIÓN: Intentar respuesta local primero (sin IA)
+            if OPTIMIZATION_ENABLED and local_response_matcher:
+                local_response = local_response_matcher(query)
+                if local_response:
+                    logger.info(f"📍 Respuesta local para usuario {user_id}")
+                    return local_response
             
             # Intentar usar LangGraphService primero
             if self.langgraph_service:
@@ -274,14 +419,7 @@ class EliasBot:
                                 respuesta = f"✅ **{len(resultado_creacion)} tareas creadas exitosamente**\n\n"
                                 for i, tarea in enumerate(resultado_creacion, 1):
                                     respuesta += f"**{i}.** {tarea.nombre}\n"
-                                    respuesta += f"   ⚡ {tarea.prioridad.value if hasattr(tarea.prioridad, 'value') else tarea.prioridad}"
-                                    
-                                    if hasattr(tarea, 'fecha_vencimiento') and tarea.fecha_vencimiento:
-                                        respuesta += f" | 📅 {tarea.fecha_vencimiento.strftime('%d/%m/%Y')}"
-                                        
-                                    if hasattr(tarea, 'proyecto_ids') and tarea.proyecto_ids:
-                                        respuesta += f" | 📁 {tarea.proyecto_ids[0]}"
-                                        
+                                    respuesta += f"   {_format_tarea(tarea, compact=True)}"
                                     if hasattr(tarea, 'id') and tarea.id:
                                         respuesta += f"\n   🆔 ID: `{tarea.id}`"
                                     respuesta += "\n\n"
@@ -289,17 +427,7 @@ class EliasBot:
                                 # Una sola tarea creada
                                 tarea = resultado_creacion
                                 respuesta = f"✅ **Tarea creada exitosamente**\n\n"
-                                respuesta += f"📝 **Título:** {tarea.nombre}\n"
-                                respuesta += f"⚡ **Prioridad:** {tarea.prioridad.value if hasattr(tarea.prioridad, 'value') else tarea.prioridad}\n"
-                                respuesta += f"📊 **Estado:** {tarea.estado.value if hasattr(tarea.estado, 'value') else tarea.estado}\n"
-                                
-                                if hasattr(tarea, 'fecha_vencimiento') and tarea.fecha_vencimiento:
-                                    respuesta += f"📅 **Vencimiento:** {tarea.fecha_vencimiento.strftime('%d/%m/%Y')}\n"
-                                
-                                if hasattr(tarea, 'proyecto_ids') and tarea.proyecto_ids:
-                                    respuesta += f"📁 **Proyecto:** {tarea.proyecto_ids[0]}\n"
-                                
-                                respuesta += f"🆔 **ID:** `{tarea.id}`\n"
+                                respuesta += _format_tarea(tarea)
                             
                             # Agregar link a Notion
                             if hasattr(settings, 'NOTION_DB_TAREAS') and settings.NOTION_DB_TAREAS:
@@ -375,6 +503,9 @@ class EliasBot:
         # Comandos de administrador
         self.application.add_handler(
             CommandHandler("admin", self.command_handlers.admin_command)
+        )
+        self.application.add_handler(
+            CommandHandler("optstats", self.command_handlers.optstats_command)
         )
         
         # Handler para mensajes de texto (consultas naturales)

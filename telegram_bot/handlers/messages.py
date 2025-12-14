@@ -1,10 +1,4 @@
-"""
-Handlers de Mensajes para Telegram Bot
-=====================================
-
-Maneja todos los mensajes de texto que no son comandos.
-Aquí es donde ocurre la magia: procesamiento de lenguaje natural.
-"""
+"""Handlers de Mensajes para Telegram Bot - Procesamiento de lenguaje natural."""
 
 import logging
 from telegram import Update
@@ -12,25 +6,15 @@ from telegram.ext import ContextTypes
 
 logger = logging.getLogger(__name__)
 
+
 class MessageHandlers:
-    """
-    Clase que maneja todos los mensajes de texto del bot
-    """
+    """Maneja todos los mensajes de texto del bot (consultas en lenguaje natural)."""
     
     def __init__(self, bot_instance):
-        """
-        Args:
-            bot_instance: Instancia del bot principal (EliasBot)
-        """
         self.bot = bot_instance
     
     async def handle_text_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        """
-        Handler principal para mensajes de texto
-        
-        Este es el corazón del bot: aquí se procesan todas las consultas
-        en lenguaje natural usando LangGraphService.
-        """
+        """Handler principal para mensajes de texto - Procesa consultas con IA."""
         try:
             user = update.effective_user
             message_text = update.message.text.strip()
@@ -49,12 +33,20 @@ class MessageHandlers:
                     user_id=user.id
                 )
                 
-                # Enviar respuesta al usuario
-                await update.message.reply_text(
-                    respuesta,
-                    parse_mode='Markdown',
-                    reply_markup=self.bot.keyboards.quick_actions()
-                )
+                # Enviar respuesta al usuario con manejo de errores de formato
+                try:
+                    await update.message.reply_text(
+                        respuesta,
+                        parse_mode='Markdown',
+                        reply_markup=self.bot.keyboards.quick_actions()
+                    )
+                except Exception as parse_error:
+                    # Si falla el Markdown, enviar sin formato
+                    logger.warning(f"⚠️ Error de formato Markdown, enviando sin formato: {parse_error}")
+                    await update.message.reply_text(
+                        respuesta,
+                        reply_markup=self.bot.keyboards.quick_actions()
+                    )
                 
                 logger.info(f"✅ Respuesta enviada a usuario {user.id}")
                 

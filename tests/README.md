@@ -1,6 +1,6 @@
-# Tests - Módulo de Pruebas ELiaS
+# 🧪 Tests - Módulo de Pruebas ELiaS
 
-Este módulo contiene todas las pruebas, verificaciones y scripts de testing para el sistema ELiaS.
+Este módulo contiene todas las pruebas, verificaciones, scripts de testing y **sistema de benchmark** para evaluar el sistema ELiaS.
 
 ## 📁 Estructura
 
@@ -8,11 +8,12 @@ Este módulo contiene todas las pruebas, verificaciones y scripts de testing par
 tests/
 ├── __init__.py                 # Inicialización del módulo
 ├── README.md                   # Esta documentación
-├── run_all_tests.py           # Ejecutor principal de todos los tests
-├── test_conexion.py           # Test básico de conexión
-├── test_notion_fix.py         # Tests del sistema Notion
-├── test_telegram_bot.py       # Tests completos del bot de Telegram
-└── verificar_bot_completo.py  # Verificación final del bot complejo
+├── run_all_tests.py            # Ejecutor principal de todos los tests
+├── benchmark_bot.py            # 🆕 Benchmark con banco de 39 preguntas
+├── test_conexion.py            # Test básico de conexión
+├── test_notion_fix.py          # Tests del sistema Notion
+├── test_telegram_bot.py        # Tests completos del bot de Telegram
+└── verificar_bot_completo.py   # Verificación final del bot
 ```
 
 ## 🚀 Uso Rápido
@@ -41,13 +42,68 @@ python tests/run_all_tests.py telegram
 python tests/run_all_tests.py verificar
 ```
 
-### Ejecutar Tests Individuales
+## 📊 Sistema de Benchmark (NUEVO)
+
+El archivo `benchmark_bot.py` contiene un banco de **39 preguntas** organizadas en 5 categorías para evaluar el bot sistemáticamente.
+
+### Ejecutar Benchmark Completo
+
 ```bash
-# Test específico individual
-python tests/test_conexion.py
-python tests/test_notion_fix.py
-python tests/test_telegram_bot.py
-python tests/verificar_bot_completo.py
+python tests/benchmark_bot.py
+```
+
+### Ejecutar por Categoría
+
+```bash
+# Solo pruebas de creación de tareas (11 preguntas)
+python tests/benchmark_bot.py --categoria crear_tarea
+
+# Solo pruebas de creación de eventos (9 preguntas)
+python tests/benchmark_bot.py --categoria crear_evento
+
+# Solo pruebas de consultas (10 preguntas)
+python tests/benchmark_bot.py --categoria consultar
+
+# Solo pruebas ambiguas (6 preguntas)
+python tests/benchmark_bot.py --categoria ambiguo
+
+# Pruebas mixtas/complejas (3 preguntas)
+python tests/benchmark_bot.py --categoria mixto
+```
+
+### Guardar Resultados
+
+```bash
+# Guardar en JSON
+python tests/benchmark_bot.py --output resultados.json
+
+# Guardar categoría específica
+python tests/benchmark_bot.py --categoria crear_evento --output eventos.json
+```
+
+### Categorías del Benchmark
+
+| Categoría | Preguntas | Descripción |
+|-----------|-----------|-------------|
+| `crear_tarea` | 11 | Creación de tareas con diferentes formatos |
+| `crear_evento` | 9 | Creación de eventos con fechas y ubicaciones |
+| `consultar` | 10 | Consultas sobre tareas, eventos, proyectos |
+| `ambiguo` | 6 | Mensajes que requieren clarificación |
+| `mixto` | 3 | Casos complejos y edge cases |
+
+### Ejemplo de Salida del Benchmark
+
+```
+🔬 BENCHMARK DE ELIAS BOT
+═══════════════════════════════════════════════════════
+
+📂 Categoría: crear_tarea (11 preguntas)
+───────────────────────────────────────────────────────
+1/11 │ "Crear tarea: estudiar para el examen de cálculo"
+     │ Esperado: CREAR_TAREA
+     │ Resultado: ✅ CREAR_TAREA
+     │ Tiempo: 0.45s
+───────────────────────────────────────────────────────
 ```
 
 ## 📋 Descripción de Tests
@@ -62,10 +118,10 @@ python tests/verificar_bot_completo.py
 ### `test_notion_fix.py`
 - **Propósito**: Tests del sistema Notion
 - **Verifica**:
-  - Creación de objetos Tarea
+  - Creación de objetos Tarea y Evento
   - Conexión a Notion API
   - Funcionamiento de servicios Notion
-  - Creación de tareas completas
+  - Creación de tareas y eventos completos
 
 ### `test_telegram_bot.py`
 - **Propósito**: Suite completa de tests del bot
@@ -76,6 +132,15 @@ python tests/verificar_bot_completo.py
   - Servicios inicializados
   - Creación del bot
   - Handlers configurados
+
+### `benchmark_bot.py` (NUEVO)
+- **Propósito**: Evaluación sistemática del bot
+- **Verifica**:
+  - Clasificación de intenciones (CREAR_TAREA, CREAR_EVENTO, CONSULTAR, AMBIGUO)
+  - Extracción de datos de tareas (nombre, prioridad, fecha, tiempo_estimado)
+  - Extracción de datos de eventos (nombre, fecha, ubicación, tipo)
+  - Respuestas a consultas de información
+  - Manejo de casos ambiguos
 
 ### `verificar_bot_completo.py`
 - **Propósito**: Verificación final antes de ejecutar
@@ -151,6 +216,23 @@ Estos tests pueden usarse en pipelines de CI/CD:
 3. Implementar función `main()` o `run_all_tests()`
 4. Agregar al diccionario en `run_all_tests.py`
 
+### Agregar Preguntas al Benchmark
+
+Para agregar nuevas preguntas al benchmark, edita `benchmark_bot.py`:
+
+```python
+PREGUNTAS = {
+    "crear_tarea": [
+        {"texto": "Tu nueva pregunta aquí", "esperado": "CREAR_TAREA"},
+        # ...
+    ],
+    "crear_evento": [
+        {"texto": "Nuevo evento de prueba", "esperado": "CREAR_EVENTO"},
+        # ...
+    ]
+}
+```
+
 ## 🤖 Automatización
 
 Los tests se pueden ejecutar automáticamente:
@@ -158,6 +240,30 @@ Los tests se pueden ejecutar automáticamente:
 - Después de cambios en configuración
 - Como health check del sistema
 - En tareas programadas
+- **Benchmark antes de cambios en IA**
+
+### Integración Continua
+
+```yaml
+# Ejemplo GitHub Actions
+name: ELiaS Tests
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Tests
+        run: python tests/run_all_tests.py
+      - name: Run Benchmark
+        run: python tests/benchmark_bot.py --output benchmark_results.json
+      - name: Upload Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: benchmark-results
+          path: benchmark_results.json
+```
 
 ---
 

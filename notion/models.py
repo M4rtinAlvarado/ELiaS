@@ -28,6 +28,23 @@ class EstadoProyecto(Enum):
     COMPLETADO = "Completado"
     CANCELADO = "Cancelado"
 
+class EstadoEvento(Enum):
+    """Estados posibles para un evento"""
+    PROGRAMADO = "Programado"
+    EN_CURSO = "En curso"
+    COMPLETADO = "Completado"
+    CANCELADO = "Cancelado"
+
+class TipoEvento(Enum):
+    """Tipos de eventos disponibles"""
+    REUNION = "Reunión"
+    CITA = "Cita"
+    CUMPLEANOS = "Cumpleaños"
+    CLASE = "Clase"
+    EXAMEN = "Examen"
+    EVENTO_SOCIAL = "Evento Social"
+    OTRO = "Otro"
+
 @dataclass
 class PropiedadNotion:
     """Clase base para propiedades de Notion"""
@@ -224,6 +241,9 @@ class Tarea:
     estado: EstadoTarea = EstadoTarea.SIN_EMPEZAR
     prioridad: PrioridadTarea = PrioridadTarea.MEDIA
     
+    # Tiempo estimado (en minutos)
+    tiempo_estimado: Optional[int] = None
+    
     # Fechas
     fecha_creacion: Optional[datetime] = None
     fecha_vencimiento: Optional[datetime] = None
@@ -304,6 +324,13 @@ class Tarea:
                 except:
                     pass
         
+        # Extraer tiempo estimado (número en minutos)
+        tiempo_estimado = None
+        if 'Tiempo Estimado' in properties or 'Estimated Time' in properties:
+            prop_tiempo = properties.get('Tiempo Estimado') or properties.get('Estimated Time')
+            if prop_tiempo and prop_tiempo.get('number') is not None:
+                tiempo_estimado = int(prop_tiempo['number'])
+        
         # Extraer relaciones con proyectos
         proyecto_ids = []
         if 'Proyectos' in properties or 'Project' in properties or 'Proyecto' in properties:
@@ -323,6 +350,7 @@ class Tarea:
             descripcion=descripcion,
             estado=estado,
             prioridad=prioridad,
+            tiempo_estimado=tiempo_estimado,
             fecha_creacion=datetime.fromisoformat(
                 page_data.get('created_time', '').replace('Z', '+00:00')
             ) if page_data.get('created_time') else None,
@@ -349,6 +377,10 @@ class Tarea:
         # Prioridad (esta sí es select)
         propiedades['Prioridad'] = PropiedadSelect(valor=self.prioridad.value).to_notion_format()
         
+        # Tiempo estimado (número en minutos)
+        if self.tiempo_estimado is not None:
+            propiedades['Tiempo Estimado'] = {"number": self.tiempo_estimado}
+        
         # Fecha de vencimiento
         if self.fecha_vencimiento:
             propiedades['Fecha'] = PropiedadFecha(valor=self.fecha_vencimiento).to_notion_format()
@@ -360,7 +392,8 @@ class Tarea:
         return propiedades
     
     def __str__(self) -> str:
-        return f"Tarea: {self.nombre} ({self.estado.value}) - {self.prioridad.value}"
+        tiempo_str = f" - {self.tiempo_estimado}min" if self.tiempo_estimado else ""
+        return f"Tarea: {self.nombre} ({self.estado.value}) - {self.prioridad.value}{tiempo_str}"
 
 @dataclass
 class Proyecto:
@@ -496,3 +529,178 @@ class Proyecto:
     
     def __str__(self) -> str:
         return f"Proyecto: {self.nombre} ({self.estado.value}) - {self.progreso}%"
+
+
+@dataclass
+class Evento:
+    """Modelo para un evento de Notion"""
+    # Identificadores
+    id: Optional[str] = None
+    url: Optional[str] = None
+    
+    # Propiedades principales (basadas en DB del usuario)
+    nombre: str = ""
+    fecha: Optional[datetime] = None
+    fecha_fin: Optional[datetime] = None  # Para eventos con rango de fechas
+    estado: EstadoEvento = EstadoEvento.PROGRAMADO
+    tipo: TipoEvento = TipoEvento.OTRO
+    ubicacion: str = ""
+    
+    # Relaciones
+    tarea_ids: List[str] = field(default_factory=list)
+    proyecto_ids: List[str] = field(default_factory=list)
+    
+    # Metadatos
+    fecha_creacion: Optional[datetime] = None
+    propiedades_raw: Dict[str, Any] = field(default_factory=dict)
+    
+    @classmethod
+    def from_notion_page(cls, page_data: Dict[str, Any]) -> 'Evento':
+        """Crea un Evento desde los datos de una página de Notion"""
+        properties = page_data.get('properties', {})
+        
+        # Extraer nombre (título)
+        nombre = ""
+        if 'Nombre' in properties or 'Name' in properties:
+            prop_nombre = properties.get('Nombre') or properties.get('Name')
+            if prop_nombre and prop_nombre.get('title'):
+                nombre = "".join([
+                    item.get('text', {}).get('content', '') 
+                    for item in prop_nombre['title']
+                ])
+        
+        # Extraer fecha (puede ser rango)
+        fecha = None
+        fecha_fin = None
+        if 'Fecha' in properties or 'Date' in properties:
+            prop_fecha = properties.get('Fecha') or properties.get('Date')
+            if prop_fecha and prop_fecha.get('date'):
+                fecha_data = prop_fecha['date']
+                if fecha_data.get('start'):
+                    try:
+                        fecha = datetime.fromisoformat(
+                            fecha_data['start'].replace('Z', '+00:00')
+                        )
+                    except:
+                        pass
+                if fecha_data.get('end'):
+                    try:
+                        fecha_fin = datetime.fromisoformat(
+                            fecha_data['end'].replace('Z', '+00:00')
+                        )
+                    except:
+                        pass
+        
+        # Extraer estado (Status type en Notion)
+        estado = EstadoEvento.PROGRAMADO
+        if 'Estado' in properties or 'Status' in properties:
+            prop_estado = properties.get('Estado') or properties.get('Status')
+            estado_nombre = ""
+            
+            if prop_estado and prop_estado.get('status'):
+                estado_nombre = prop_estado['status'].get('name', '')
+            elif prop_estado and prop_estado.get('select'):
+                estado_nombre = prop_estado['select'].get('name', '')
+                
+            if estado_nombre:
+                try:
+                    estado = EstadoEvento(estado_nombre)
+                except ValueError:
+                    estado = EstadoEvento.PROGRAMADO
+        
+        # Extraer tipo (Select)
+        tipo = TipoEvento.OTRO
+        if 'Tipo' in properties or 'Type' in properties:
+            prop_tipo = properties.get('Tipo') or properties.get('Type')
+            if prop_tipo and prop_tipo.get('select'):
+                tipo_nombre = prop_tipo['select'].get('name', '')
+                try:
+                    tipo = TipoEvento(tipo_nombre)
+                except ValueError:
+                    tipo = TipoEvento.OTRO
+        
+        # Extraer ubicación (Rich text)
+        ubicacion = ""
+        if 'Ubicación' in properties or 'Location' in properties:
+            prop_ubicacion = properties.get('Ubicación') or properties.get('Location')
+            if prop_ubicacion and prop_ubicacion.get('rich_text'):
+                ubicacion = "".join([
+                    item.get('text', {}).get('content', '') 
+                    for item in prop_ubicacion['rich_text']
+                ])
+        
+        # Extraer relaciones con tareas
+        tarea_ids = []
+        if 'Tareas' in properties or 'Tasks' in properties:
+            prop_tareas = properties.get('Tareas') or properties.get('Tasks')
+            if prop_tareas and prop_tareas.get('relation'):
+                tarea_ids = [
+                    item.get('id', '') for item in prop_tareas['relation'] 
+                    if item.get('id')
+                ]
+        
+        # Extraer relaciones con proyectos
+        proyecto_ids = []
+        if 'Proyectos' in properties or 'Projects' in properties:
+            prop_proyectos = properties.get('Proyectos') or properties.get('Projects')
+            if prop_proyectos and prop_proyectos.get('relation'):
+                proyecto_ids = [
+                    item.get('id', '') for item in prop_proyectos['relation'] 
+                    if item.get('id')
+                ]
+        
+        return cls(
+            id=page_data.get('id'),
+            url=page_data.get('url'),
+            nombre=nombre,
+            fecha=fecha,
+            fecha_fin=fecha_fin,
+            estado=estado,
+            tipo=tipo,
+            ubicacion=ubicacion,
+            tarea_ids=tarea_ids,
+            proyecto_ids=proyecto_ids,
+            fecha_creacion=datetime.fromisoformat(
+                page_data.get('created_time', '').replace('Z', '+00:00')
+            ) if page_data.get('created_time') else None,
+            propiedades_raw=properties
+        )
+    
+    def to_notion_properties(self) -> Dict[str, Any]:
+        """Convierte el evento al formato de propiedades de Notion"""
+        propiedades = {}
+        
+        # Nombre (título)
+        if self.nombre:
+            propiedades['Nombre'] = PropiedadTexto(valor=self.nombre, tipo='title').to_notion_format()
+        
+        # Fecha (con posible fecha fin)
+        if self.fecha:
+            propiedades['Fecha'] = PropiedadFecha(
+                valor=self.fecha, 
+                fecha_fin=self.fecha_fin
+            ).to_notion_format()
+        
+        # Estado (usar status)
+        propiedades['Estado'] = PropiedadStatus(valor=self.estado.value).to_notion_format()
+        
+        # Tipo (select)
+        propiedades['Tipo'] = PropiedadSelect(valor=self.tipo.value).to_notion_format()
+        
+        # Ubicación (rich text)
+        if self.ubicacion:
+            propiedades['Ubicación'] = PropiedadRichText(valor=self.ubicacion).to_notion_format()
+        
+        # Relación con tareas
+        if self.tarea_ids:
+            propiedades['Tareas'] = PropiedadRelacion(valor=self.tarea_ids).to_notion_format()
+        
+        # Relación con proyectos
+        if self.proyecto_ids:
+            propiedades['Proyectos'] = PropiedadRelacion(valor=self.proyecto_ids).to_notion_format()
+        
+        return propiedades
+    
+    def __str__(self) -> str:
+        fecha_str = self.fecha.strftime('%d/%m/%Y %H:%M') if self.fecha else 'Sin fecha'
+        return f"Evento: {self.nombre} ({self.tipo.value}) - {fecha_str} - {self.estado.value}"

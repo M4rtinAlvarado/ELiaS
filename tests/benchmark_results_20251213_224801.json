@@ -1,0 +1,166 @@
+{
+  "metadata": {
+    "timestamp": "2025-12-13T22:48:01.891471",
+    "total_queries": 10,
+    "save_to_notion": false
+  },
+  "stats": {
+    "total": 10,
+    "exitosas": 0,
+    "fallidas": 10,
+    "por_categoria": {
+      "crear_tarea": {
+        "total": 2,
+        "exitosas": 0,
+        "coinciden": 0
+      },
+      "crear_evento": {
+        "total": 2,
+        "exitosas": 0,
+        "coinciden": 0
+      },
+      "consultar": {
+        "total": 2,
+        "exitosas": 0,
+        "coinciden": 0
+      },
+      "ambiguo": {
+        "total": 2,
+        "exitosas": 0,
+        "coinciden": 0
+      },
+      "mixto": {
+        "total": 2,
+        "exitosas": 0,
+        "coinciden": 0
+      }
+    },
+    "por_intencion_detectada": {
+      "ERROR": 10
+    },
+    "tiempo_total": 0.0,
+    "tiempo_promedio": 0.0
+  },
+  "results": [
+    {
+      "query": "Tengo que estudiar matemáticas mañana",
+      "categoria_esperada": "crear_tarea",
+      "timestamp": "2025-12-13T22:47:56.871444",
+      "clasificacion": {
+        "error": "GeminiService no disponible"
+      },
+      "respuesta_completa": "[No ejecutado - modo solo clasificación]",
+      "tiempo_clasificacion": 0.0,
+      "tiempo_total": 0.0,
+      "exitosa": false
+    },
+    {
+      "query": "Comprar leche y pan para la cena",
+      "categoria_esperada": "crear_tarea",
+      "timestamp": "2025-12-13T22:47:57.379709",
+      "clasificacion": {
+        "error": "GeminiService no disponible"
+      },
+      "respuesta_completa": "[No ejecutado - modo solo clasificación]",
+      "tiempo_clasificacion": 0.0,
+      "tiempo_total": 0.0,
+      "exitosa": false
+    },
+    {
+      "query": "Reunión con el equipo mañana a las 3pm",
+      "categoria_esperada": "crear_evento",
+      "timestamp": "2025-12-13T22:47:57.880638",
+      "clasificacion": {
+        "error": "GeminiService no disponible"
+      },
+      "respuesta_completa": "[No ejecutado - modo solo clasificación]",
+      "tiempo_clasificacion": 0.0,
+      "tiempo_total": 0.0,
+      "exitosa": false
+    },
+    {
+      "query": "Cita con el doctor el viernes a las 10am",
+      "categoria_esperada": "crear_evento",
+      "timestamp": "2025-12-13T22:47:58.382196",
+      "clasificacion": {
+        "error": "GeminiService no disponible"
+      },
+      "respuesta_completa": "[No ejecutado - modo solo clasificación]",
+      "tiempo_clasificacion": 0.0,
+      "tiempo_total": 0.0,
+      "exitosa": false
+    },
+    {
+      "query": "¿Cuántas tareas tengo pendientes?",
+      "categoria_esperada": "consultar",
+      "timestamp": "2025-12-13T22:47:58.883691",
+      "clasificacion": {
+        "error": "GeminiService no disponible"
+      },
+      "respuesta_completa": "[No ejecutado - modo solo clasificación]",
+      "tiempo_clasificacion": 0.0,
+      "tiempo_total": 0.0,
+      "exitosa": false
+    },
+    {
+      "query": "Muéstrame todas mis tareas",
+      "categoria_esperada": "consultar",
+      "timestamp": "2025-12-13T22:47:59.384939",
+      "clasificacion": {
+        "error": "GeminiService no disponible"
+      },
+      "respuesta_completa": "[No ejecutado - modo solo clasificación]",
+      "tiempo_clasificacion": 0.0,
+      "tiempo_total": 0.0,
+      "exitosa": false
+    },
+    {
+      "query": "Hola",
+      "categoria_esperada": "ambiguo",
+      "timestamp": "2025-12-13T22:47:59.886253",
+      "clasificacion": {
+        "error": "GeminiService no disponible"
+      },
+      "respuesta_completa": "[No ejecutado - modo solo clasificación]",
+      "tiempo_clasificacion": 0.0,
+      "tiempo_total": 0.0,
+      "exitosa": false
+    },
+    {
+      "query": "Buenos días",
+      "categoria_esperada": "ambiguo",
+      "timestamp": "2025-12-13T22:48:00.387568",
+      "clasificacion": {
+        "error": "GeminiService no disponible"
+      },
+      "respuesta_completa": "[No ejecutado - modo solo clasificación]",
+      "tiempo_clasificacion": 0.0,
+      "tiempo_total": 0.0,
+      "exitosa": false
+    },
+    {
+      "query": "Estudiar para el examen del viernes y también tengo reunión a las 3pm",
+      "categoria_esperada": "mixto",
+      "timestamp": "2025-12-13T22:48:00.889277",
+      "clasificacion": {
+        "error": "GeminiService no disponible"
+      },
+      "respuesta_completa": "[No ejecutado - modo solo clasificación]",
+      "tiempo_clasificacion": 0.0,
+      "tiempo_total": 0.0,
+      "exitosa": false
+    },
+    {
+      "query": "Necesito hacer ejercicio y tengo cita médica mañana",
+      "categoria_esperada": "mixto",
+      "timestamp": "2025-12-13T22:48:01.389852",
+      "clasificacion": {
+        "error": "GeminiService no disponible"
+      },
+      "respuesta_completa": "[No ejecutado - modo solo clasificación]",
+      "tiempo_clasificacion": 0.0,
+      "tiempo_total": 0.0,
+      "exitosa": false
+    }
+  ]
+}

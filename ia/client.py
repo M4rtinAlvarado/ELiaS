@@ -6,6 +6,14 @@ from typing import Dict, Any, Optional, List
 from config import settings
 from config.constants import ERROR_MESSAGES, TIMEOUTS
 
+# Importar sistema de caché
+try:
+    from core.optimization import response_cache, cached_response
+    CACHE_ENABLED = True
+except ImportError:
+    CACHE_ENABLED = False
+    response_cache = None
+
 class IAConnectionError(Exception):
     """Excepción personalizada para errores de conexión con servicios de IA"""
     pass
@@ -40,7 +48,7 @@ class IAClient:
         print(f"   • Max tokens: {settings.GEMINI_MAX_TOKENS}")
     
     def _initialize_clients(self) -> None:
-        """Inicializa los clientes de IA disponibles"""
+        """Inicializa los clientes de IA disponibles (lazy loading)"""
         # Intentar inicializar Gemini
         try:
             from langchain_google_genai import ChatGoogleGenerativeAI
@@ -52,9 +60,9 @@ class IAClient:
                 max_tokens=settings.GEMINI_MAX_TOKENS
             )
             
-            # Test de conexión simple
-            test_response = self._gemini_client.invoke("Test de conexión")
-            print(f"✅ Gemini conectado exitosamente")
+            # NO hacer test aquí - se valida en primera llamada real
+            self._connection_verified = False
+            print(f"✅ Gemini cliente inicializado (verificación lazy)")
             
         except ImportError:
             print("⚠️ langchain_google_genai no disponible - Instalar: pip install langchain-google-genai")
@@ -105,12 +113,13 @@ class IAClient:
         """Verifica si LangChain está disponible"""
         return self._langchain_available
     
-    def invoke_gemini(self, prompt: str, **kwargs) -> str:
+    def invoke_gemini(self, prompt: str, use_cache: bool = True, **kwargs) -> str:
         """
-        Invoca Gemini con un prompt
+        Invoca Gemini con un prompt (con soporte de caché)
         
         Args:
             prompt: Texto del prompt
+            use_cache: Si usar caché de respuestas (default: True)
             **kwargs: Parámetros adicionales
         
         Returns:
@@ -123,12 +132,24 @@ class IAClient:
             if not self._gemini_client:
                 raise IAConnectionError("Cliente Gemini no disponible")
             
+            # Verificar conexión en primera llamada (lazy validation)
+            if not getattr(self, '_connection_verified', False):
+                try:
+                    test = self._gemini_client.invoke("Hi")
+                    self._connection_verified = True
+                    print("✅ Conexión con Gemini verificada")
+                except Exception as e:
+                    raise IAConnectionError(f"No se pudo conectar con Gemini: {e}")
+            
+            # Intentar obtener de caché primero
+            if use_cache and CACHE_ENABLED and response_cache:
+                cached = response_cache.get(prompt, **kwargs)
+                if cached is not None:
+                    print(f"🗄️ Respuesta desde caché")
+                    return cached
+            
             # Configurar parámetros opcionales
-            params = {}
-            if 'temperature' in kwargs:
-                params['temperature'] = kwargs['temperature']
-            if 'max_tokens' in kwargs:
-                params['max_tokens'] = kwargs['max_tokens']
+            params = {k: kwargs[k] for k in ['temperature', 'max_tokens'] if k in kwargs}
             
             # Crear cliente temporal si hay parámetros custom
             if params:
@@ -144,10 +165,13 @@ class IAClient:
                 response = self._gemini_client.invoke(prompt)
             
             # Extraer contenido de la respuesta
-            if hasattr(response, 'content'):
-                return response.content
-            else:
-                return str(response)
+            result = response.content if hasattr(response, 'content') else str(response)
+            
+            # Guardar en caché
+            if use_cache and CACHE_ENABLED and response_cache:
+                response_cache.set(prompt, result, **kwargs)
+            
+            return result
                 
         except Exception as e:
             raise IAConnectionError(f"Error invocando Gemini: {e}")

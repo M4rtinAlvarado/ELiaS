@@ -1,14 +1,14 @@
-# Config - Módulo de Configuración
+# 🔧 Config - Módulo de Configuración
 
-Este módulo centraliza toda la configuración del sistema ELiaS, incluyendo variables de entorno, configuración de APIs y parámetros del sistema.
+Este módulo centraliza toda la configuración del sistema ELiaS v2.0, incluyendo variables de entorno, configuración de APIs y parámetros del sistema.
 
 ## 📁 Estructura
 
 ```
 config/
 ├── __init__.py           # Inicialización del módulo
-├── README.md            # Esta documentación
-└── settings.py          # Configuración principal del sistema
+├── README.md             # Esta documentación
+└── settings.py           # Configuración principal del sistema
 ```
 
 ## ⚙️ Configuración Principal
@@ -26,6 +26,7 @@ TELEGRAM_ADMIN_IDS=123456789,987654321
 NOTION_TOKEN=your_notion_integration_token
 NOTION_TAREAS_DB_ID=your_tasks_database_id
 NOTION_PROYECTOS_DB_ID=your_projects_database_id
+NOTION_EVENTOS_DB_ID=your_events_database_id
 
 # Google Gemini AI
 GOOGLE_API_KEY=your_google_ai_api_key
@@ -35,7 +36,7 @@ GOOGLE_API_KEY=your_google_ai_api_key
 
 ```env
 # Configuración del modelo IA (opcional)
-GEMINI_MODEL=gemini-2.0-flash
+GEMINI_MODEL=gemini-2.5-flash
 GEMINI_TEMPERATURE=0.0
 GEMINI_MAX_TOKENS=100000
 
@@ -46,6 +47,10 @@ LOG_FILE=elias.log
 # Configuración de desarrollo (opcional)
 DEBUG_MODE=False
 ENABLE_VERBOSE_LOGGING=False
+
+# Optimización (opcional)
+CACHE_ENABLED=True
+CACHE_TTL_SECONDS=300
 ```
 
 ## 🔧 Uso del Módulo
@@ -89,13 +94,14 @@ else:
 | `NOTION_TOKEN` | str | ✅ | Token de integración de Notion |
 | `NOTION_TAREAS_DB_ID` | str | ✅ | ID de la base de datos de tareas |
 | `NOTION_PROYECTOS_DB_ID` | str | ✅ | ID de la base de datos de proyectos |
+| `NOTION_EVENTOS_DB_ID` | str | ✅ | ID de la base de datos de eventos |
 
 ### Google AI
 
 | Variable | Tipo | Requerido | Descripción |
 |----------|------|-----------|-------------|
 | `GOOGLE_API_KEY` | str | ✅ | API Key de Google AI Studio |
-| `GEMINI_MODEL` | str | ❌ | Modelo a usar (default: gemini-2.0-flash) |
+| `GEMINI_MODEL` | str | ❌ | Modelo a usar (default: gemini-2.5-flash) |
 | `GEMINI_TEMPERATURE` | float | ❌ | Temperatura del modelo (default: 0.0) |
 | `GEMINI_MAX_TOKENS` | int | ❌ | Máx. tokens por respuesta (default: 100000) |
 

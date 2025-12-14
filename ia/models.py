@@ -20,10 +20,9 @@ class TipoPrompt(Enum):
 
 class ModeloIA(Enum):
     """Modelos de IA disponibles"""
-    GEMINI_PRO = "gemini-pro"
-    GEMINI_PRO_VISION = "gemini-pro-vision"
-    GEMINI_1_5_PRO = "gemini-1.5-pro"
-    GEMINI_1_5_FLASH = "gemini-1.5-flash"
+    GEMINI_PRO = "gemini-2.5-flash"       # Modelo principal recomendado
+    GEMINI_STANDARD = "gemini-2.5-flash"  # Mismo modelo para consistencia
+    GEMINI_LEGACY = "gemini-2.0-flash"    # Versión anterior (deprecada)
 
 @dataclass
 class ConfiguracionModelo:
@@ -208,6 +207,11 @@ INSTRUCCIONES ESPECÍFICAS:
 - Media: fechas normales (3-7 días), tareas rutinarias
 - Baja: fechas lejanas (>1 semana), tareas opcionales
 
+⏱️ TIEMPO ESTIMADO (en minutos):
+- Extrae si el usuario menciona duración: "30 min", "1 hora", "2 horas"
+- Convierte a minutos: "1 hora" = 60, "2 horas" = 120, "media hora" = 30
+- Si no se menciona, usa null
+
 RESPONDE ÚNICAMENTE CON UN JSON VÁLIDO:
 {{
     "tareas": [
@@ -216,14 +220,15 @@ RESPONDE ÚNICAMENTE CON UN JSON VÁLIDO:
             "descripcion": "Contexto adicional si es necesario",
             "prioridad": "Baja|Media|Alta|Urgente",
             "proyecto": "uno de los proyectos disponibles OBLIGATORIO",
-            "fecha_vencimiento": "YYYY-MM-DD (calculada exactamente)"
+            "fecha_vencimiento": "YYYY-MM-DD (calculada exactamente)",
+            "tiempo_estimado": número_en_minutos_o_null
         }}
     ]
 }}
 
 EJEMPLOS DE ENTRADA → SALIDA:
 
-Entrada: "Para el proyecto personal necesito hacer ejercicio y comprar vitaminas"
+Entrada: "Para el proyecto personal necesito hacer ejercicio 30 minutos y comprar vitaminas"
 Salida: {{
     "tareas": [
         {{
@@ -231,19 +236,21 @@ Salida: {{
             "descripcion": "Actividad física para mantenimiento",
             "prioridad": "Media", 
             "proyecto": "Personal",
-            "fecha_vencimiento": null
+            "fecha_vencimiento": null,
+            "tiempo_estimado": 30
         }},
         {{
             "titulo": "Comprar vitaminas",
             "descripcion": "Suplementos para salud personal",
             "prioridad": "Media",
             "proyecto": "Personal", 
-            "fecha_vencimiento": null
+            "fecha_vencimiento": null,
+            "tiempo_estimado": null
         }}
     ]
 }}
 
-Entrada: "Estudiar el capítulo 5 para el examen del viernes"
+Entrada: "Estudiar el capítulo 5 por 2 horas para el examen del viernes"
 Salida: {{
     "tareas": [
         {{
@@ -251,7 +258,8 @@ Salida: {{
             "descripcion": "Preparación para examen del viernes",
             "prioridad": "Alta",
             "proyecto": "Universidad",
-            "fecha_vencimiento": "2025-10-18"
+            "fecha_vencimiento": "2025-10-18",
+            "tiempo_estimado": 120
         }}
     ]
 }}
@@ -290,9 +298,129 @@ Salida: {{
         return prompt
     
     @classmethod
+    def crear_evento(cls, texto_usuario: str, proyectos_disponibles: List[str] = None) -> 'Prompt':
+        """
+        Crea un prompt especializado para crear eventos estructurados
+        
+        Args:
+            texto_usuario: Texto del usuario describiendo el evento
+            proyectos_disponibles: Lista de proyectos disponibles
+        
+        Returns:
+            Prompt configurado para crear eventos con estructura específica
+        """
+        from datetime import datetime, timedelta
+        
+        contexto = """Eres un asistente experto en gestión de eventos y agenda que convierte texto natural en eventos estructurados.
+
+REGLAS OBLIGATORIAS:
+1. NOMBRE: Título claro y descriptivo del evento
+2. FECHA: Calcular fecha y hora exactas basándote en la fecha/hora actual
+3. TIPO: Clasificar correctamente (Reunión, Cita, Cumpleaños, Clase, Examen, Evento Social, Otro)
+4. UBICACIÓN: Extraer si se menciona un lugar"""
+        
+        texto_base = """FECHA Y HORA ACTUAL: {fecha_hora_actual}
+
+TEXTO DEL USUARIO: "{texto_usuario}"
+
+TIPOS DE EVENTOS DISPONIBLES:
+• Reunión (juntas, meetings, videollamadas)
+• Cita (doctor, dentista, trámites)
+• Cumpleaños (celebraciones de cumpleaños)
+• Clase (clases, cursos, tutorías)
+• Examen (exámenes, pruebas, evaluaciones)
+• Evento Social (fiestas, salidas, eventos)
+• Otro (cualquier otro tipo)
+
+📅 INTERPRETACIÓN DE FECHAS Y HORAS:
+- "mañana a las 3pm" = {fecha_manana}T15:00:00
+- "pasado mañana a las 10" = {fecha_pasado_manana}T10:00:00
+- "el viernes" = calcular próximo viernes
+- "esta tarde" = hoy entre 14:00-18:00
+- "en la noche" = hoy entre 19:00-22:00
+- Si no se especifica hora para eventos tipo reunión/cita: usar 09:00
+- Si no se especifica hora para eventos sociales: usar 18:00
+
+PROYECTOS DISPONIBLES (opcional):
+{proyectos_formateados}
+
+RESPONDE ÚNICAMENTE CON UN JSON VÁLIDO:
+{{
+    "nombre": "Título descriptivo del evento",
+    "fecha": "YYYY-MM-DDTHH:MM:SS (formato ISO)",
+    "fecha_fin": "YYYY-MM-DDTHH:MM:SS (si tiene duración, sino null)",
+    "tipo": "Reunión|Cita|Cumpleaños|Clase|Examen|Evento Social|Otro",
+    "ubicacion": "Lugar del evento (si se menciona, sino cadena vacía)",
+    "proyecto": "Proyecto relacionado si aplica (sino null)"
+}}
+
+EJEMPLOS:
+
+Entrada: "Reunión con el equipo mañana a las 3pm en la oficina"
+Salida: {{
+    "nombre": "Reunión con el equipo",
+    "fecha": "{fecha_manana}T15:00:00",
+    "fecha_fin": null,
+    "tipo": "Reunión",
+    "ubicacion": "la oficina",
+    "proyecto": null
+}}
+
+Entrada: "El cumpleaños de María es el sábado"
+Salida: {{
+    "nombre": "Cumpleaños de María",
+    "fecha": "2025-01-25T18:00:00",
+    "fecha_fin": null,
+    "tipo": "Cumpleaños",
+    "ubicacion": "",
+    "proyecto": null
+}}
+
+Entrada: "Examen de cálculo el lunes a las 8am en el aula 305"
+Salida: {{
+    "nombre": "Examen de cálculo",
+    "fecha": "2025-01-27T08:00:00",
+    "fecha_fin": null,
+    "tipo": "Examen",
+    "ubicacion": "aula 305",
+    "proyecto": "Universidad"
+}}
+
+¡PROCESA AHORA EL TEXTO DEL USUARIO!"""
+        
+        # Calcular fechas dinámicamente
+        hoy = datetime.now()
+        fechas_calculadas = {
+            "fecha_hora_actual": hoy.strftime("%Y-%m-%d %H:%M"),
+            "fecha_manana": (hoy + timedelta(days=1)).strftime("%Y-%m-%d"),
+            "fecha_pasado_manana": (hoy + timedelta(days=2)).strftime("%Y-%m-%d"),
+            "fecha_en_semana": (hoy + timedelta(days=7)).strftime("%Y-%m-%d"),
+        }
+        
+        # Formatear proyectos disponibles
+        proyectos_lista = proyectos_disponibles or ["Universidad", "Personal", "Tienda Decants", "CEE 2025"]
+        proyectos_formateados = "\n".join([f"• {proyecto}" for proyecto in proyectos_lista])
+        
+        variables_completas = {
+            "texto_usuario": texto_usuario,
+            "proyectos_formateados": proyectos_formateados,
+            **fechas_calculadas
+        }
+        
+        prompt = cls(
+            tipo=TipoPrompt.CREAR_TAREA,  # Reutilizamos el tipo, podría ser CREAR_EVENTO
+            contexto=contexto,
+            texto=texto_base,
+            variables=variables_completas
+        )
+        
+        return prompt
+    
+    @classmethod
     def clasificar_intencion(cls, texto_usuario: str) -> 'Prompt':
         """
         Crea un prompt especializado para clasificar intenciones con alta precisión
+        Distingue entre tareas, eventos y consultas
         
         Args:
             texto_usuario: Texto del usuario a analizar
@@ -300,40 +428,61 @@ Salida: {{
         Returns:
             Prompt configurado para clasificar intenciones
         """
-        contexto = """Eres un clasificador de intenciones experto en gestión de tareas y productividad.
-Tu trabajo es analizar con precisión qué acción específica quiere realizar el usuario."""
+        contexto = """Eres un clasificador de intenciones experto en gestión de tareas, eventos y productividad.
+Tu trabajo es analizar con precisión qué acción específica quiere realizar el usuario.
+IMPORTANTE: Distingue claramente entre TAREAS (cosas por hacer) y EVENTOS (citas, reuniones, celebraciones con fecha/hora específica)."""
         
         texto_base = """ANALIZA ESTE TEXTO DEL USUARIO: "{texto_usuario}"
 
 🎯 CLASIFICACIÓN DE INTENCIONES:
 
-📝 CREAR (Usuario quiere crear nueva(s) tarea(s)):
+📝 CREAR_TAREA (Usuario quiere crear nueva(s) tarea(s) - cosas por hacer):
+- Son ACCIONES que el usuario debe realizar
 - Indicadores: "necesito", "tengo que", "debo", "quiero hacer", "para el proyecto"
-- Verbos de acción: "comprar", "llamar", "estudiar", "revisar", "hacer"
-- Menciona proyectos específicos: "para universidad", "del trabajo"
-- Expresiones temporales: "mañana", "esta semana", "para el viernes"
+- Verbos de acción: "comprar", "llamar", "estudiar", "revisar", "hacer", "terminar"
+- Menciona proyectos: "para universidad", "del trabajo"
+- NO tienen hora específica de inicio
 - Ejemplos: 
   * "Tengo que comprar leche"
   * "Para el proyecto necesito revisar el código" 
   * "Debo estudiar para el examen"
+  * "Hacer ejercicio mañana"
+
+📅 CREAR_EVENTO (Usuario quiere crear un evento/cita/reunión):
+- Son OCASIONES con fecha y hora específica donde el usuario participa
+- Indicadores: "reunión", "cita", "cumpleaños", "evento", "clase", "examen", "fiesta"
+- Verbos: "tengo", "hay", "me invitaron", "es el", "asistir a"
+- Tienen hora específica: "a las 3pm", "de 10 a 12", "toda la tarde"
+- Tienen ubicación opcional: "en la oficina", "en el parque"
+- Ejemplos:
+  * "Tengo reunión mañana a las 3pm"
+  * "El cumpleaños de Juan es el sábado"
+  * "Cita con el doctor el viernes a las 10am"
+  * "Examen de matemáticas el lunes a las 8"
+  * "Clase de inglés mañana de 5 a 7"
 
 🔍 CONSULTAR (Usuario quiere ver información existente):
-- Preguntas directas: "¿cuántas?", "¿qué tareas?", "¿cómo va?"
+- Preguntas directas: "¿cuántas?", "¿qué tareas?", "¿qué eventos?", "¿cómo va?"
 - Verbos de consulta: "ver", "mostrar", "listar", "revisar estado"
-- Palabras clave: "pendientes", "completadas", "resumen", "estadísticas"
+- Palabras clave: "pendientes", "próximos", "completadas", "resumen", "estadísticas"
 - Ejemplos:
   * "¿Cuántas tareas tengo pendientes?"
-  * "Muéstrame las tareas del proyecto Universidad"
+  * "¿Qué eventos tengo esta semana?"
+  * "Muéstrame mis próximos eventos"
   * "¿Cómo van mis proyectos?"
 
 ❓ AMBIGUO (No está claro qué quiere hacer):
 - Saludos simples: "hola", "buenos días"
-- Consultas muy genéricas: "¿qué tal?", "¿cómo estás?"
+- Consultas genéricas: "¿qué tal?", "¿cómo estás?"
 - Texto incompleto o confuso
 - Ejemplos:
   * "Hola"
   * "¿Qué puedes hacer?"
   * "Ayuda"
+
+🔑 DIFERENCIA CLAVE TAREA vs EVENTO:
+- TAREA: "Estudiar para el examen" → Acción que DEBES hacer
+- EVENTO: "Examen mañana a las 8am" → Ocasión a la que ASISTES
 
 📊 NIVELES DE CONFIANZA:
 - 90-100: Muy claro, indicadores múltiples
@@ -343,7 +492,7 @@ Tu trabajo es analizar con precisión qué acción específica quiere realizar e
 
 RESPONDE ÚNICAMENTE CON ESTE JSON:
 {{
-    "intencion": "CREAR|CONSULTAR|AMBIGUO",
+    "intencion": "CREAR_TAREA|CREAR_EVENTO|CONSULTAR|AMBIGUO",
     "confianza": número_entre_0_y_100,
     "razonamiento": "explicación específica con indicadores detectados",
     "indicadores_encontrados": ["lista", "de", "palabras_clave", "detectadas"]
