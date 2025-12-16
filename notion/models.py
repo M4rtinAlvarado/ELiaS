@@ -34,6 +34,9 @@ class EstadoEvento(Enum):
     EN_CURSO = "En curso"
     COMPLETADO = "Completado"
     CANCELADO = "Cancelado"
+    POSTPONIDO = "Postponido"
+    TENTATIVO = "Tentativo"
+    CONFIRMADO = "Confirmado"
 
 class TipoEvento(Enum):
     """Tipos de eventos disponibles"""
@@ -681,8 +684,8 @@ class Evento:
                 fecha_fin=self.fecha_fin
             ).to_notion_format()
         
-        # Estado (usar status)
-        propiedades['Estado'] = PropiedadStatus(valor=self.estado.value).to_notion_format()
+        # Estado (usar select, no status)
+        propiedades['Estado'] = PropiedadSelect(valor=self.estado.value).to_notion_format()
         
         # Tipo (select)
         propiedades['Tipo'] = PropiedadSelect(valor=self.tipo.value).to_notion_format()

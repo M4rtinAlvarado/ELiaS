@@ -2,5 +2,5 @@
 *.pyc
 telegram_bot.log
 __pycache__/
-elias_env/
+ELiaS/
 __pycache__ --- IGNORE ---

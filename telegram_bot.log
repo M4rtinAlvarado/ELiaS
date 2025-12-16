@@ -1,1 +1,329 @@
 
+2025-12-16 14:46:33,041 - __main__ - INFO - 📦 Verificando dependencias...
+2025-12-16 14:46:34,653 - __main__ - INFO - ✅ python-telegram-bot v22.5 está instalado
+2025-12-16 14:46:34,653 - __main__ - INFO - 🔧 Validando configuración...
+2025-12-16 14:46:34,755 - __main__ - INFO - ✅ Configuración validada correctamente
+2025-12-16 14:46:34,755 - __main__ - INFO - 🚀 Inicializando ELiaS...
+2025-12-16 14:46:36,951 - httpx - INFO - HTTP Request: GET https://api.notion.com/v1/users/me "HTTP/1.1 200 OK"
+2025-12-16 14:46:37,066 - core.optimization - INFO - 🗄️ ResponseCache inicializado (TTL: 300s, Max: 100)
+2025-12-16 14:46:37,067 - core.optimization - INFO - ⏱️ MessageDebouncer inicializado (delay: 1.5s, max: 5)
+2025-12-16 14:46:37,067 - core.optimization - INFO - 🚀 LazyLoader inicializado
+2025-12-16 14:46:37,160 - __main__ - INFO - 🤖 Inicializando Telegram Bot...
+2025-12-16 14:46:37,160 - telegram_bot.bot - INFO - 📋 Admin IDs parseados: [7792117959]
+2025-12-16 14:46:37,160 - telegram_bot.bot - INFO - 🤖 EliasBot inicializado correctamente
+2025-12-16 14:46:37,161 - __main__ - INFO - 🚀 Iniciando bot de Telegram...
+2025-12-16 14:46:37,314 - telegram_bot.bot - INFO - 🔧 Handlers configurados correctamente
+2025-12-16 14:46:41,560 - ia.services.transcription_service - INFO - ✅ AssemblyAI configurado correctamente
+2025-12-16 14:46:41,560 - ia.services.transcription_service - INFO - ✅ Servicio de transcripción AssemblyAI inicializado
+2025-12-16 14:46:41,560 - core.optimization - INFO - ✅ langgraph_service cargado en 4.25s
+2025-12-16 14:46:41,560 - telegram_bot.bot - INFO - ✅ LangGraphService disponible (lazy loading)
+2025-12-16 14:46:41,561 - telegram_bot.bot - INFO - 🚀 Optimizaciones activas: Caché, Debouncing, Lazy Loading
+2025-12-16 14:46:41,561 - telegram_bot.bot - INFO - ✅ Servicios básicos inicializados para Telegram
+2025-12-16 14:46:41,561 - telegram_bot.bot - INFO - ✅ Bot construido correctamente
+2025-12-16 14:46:41,561 - telegram_bot.bot - INFO - 🚀 Iniciando EliasBot...
+2025-12-16 14:46:41,561 - telegram_bot.bot - INFO - 📋 Administradores: [7792117959]
+2025-12-16 14:46:42,630 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getMe "HTTP/1.1 200 OK"
+2025-12-16 14:46:42,904 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/deleteWebhook "HTTP/1.1 200 OK"
+2025-12-16 14:46:42,908 - telegram.ext.Application - INFO - Application started
+2025-12-16 14:46:53,710 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:47:04,005 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:47:14,244 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:47:14,248 - telegram_bot.handlers.messages - INFO - 💬 Usuario 7792117959: Clase de inglés mañana de 5 a 7 de la tarde...
+2025-12-16 14:47:15,150 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/sendChatAction "HTTP/1.1 200 OK"
+2025-12-16 14:47:15,154 - telegram_bot.bot - INFO - 🔄 Procesando consulta de usuario 7792117959: Clase de inglés mañana de 5 a 7 de la tarde...
+2025-12-16 14:47:15,183 - telegram_bot.bot - INFO - ✅ Consulta procesada con LangGraph para usuario 7792117959
+2025-12-16 14:47:15,600 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/sendMessage "HTTP/1.1 200 OK"
+2025-12-16 14:47:15,602 - telegram_bot.handlers.messages - INFO - ✅ Respuesta enviada a usuario 7792117959
+2025-12-16 14:47:24,938 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:47:24,940 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-12-16 14:47:24,940 - telegram.ext.Application - INFO - Application.stop() complete
+2025-12-16 14:47:24,943 - telegram_bot.bot - ERROR - ❌ Error ejecutando bot: a coroutine was expected, got None
+2025-12-16 14:47:24,943 - __main__ - ERROR - ❌ Error crítico ejecutando bot: a coroutine was expected, got None
+2025-12-16 14:47:24,943 - __main__ - ERROR - ❌ Error fatal: a coroutine was expected, got None
+2025-12-16 14:48:35,942 - __main__ - INFO - 📦 Verificando dependencias...
+2025-12-16 14:48:37,430 - __main__ - INFO - ✅ python-telegram-bot v22.5 está instalado
+2025-12-16 14:48:37,430 - __main__ - INFO - 🔧 Validando configuración...
+2025-12-16 14:48:37,482 - __main__ - INFO - ✅ Configuración validada correctamente
+2025-12-16 14:48:37,483 - __main__ - INFO - 🚀 Inicializando ELiaS...
+2025-12-16 14:48:38,979 - httpx - INFO - HTTP Request: GET https://api.notion.com/v1/users/me "HTTP/1.1 200 OK"
+2025-12-16 14:48:39,035 - core.optimization - INFO - 🗄️ ResponseCache inicializado (TTL: 300s, Max: 100)
+2025-12-16 14:48:39,036 - core.optimization - INFO - ⏱️ MessageDebouncer inicializado (delay: 1.5s, max: 5)
+2025-12-16 14:48:39,036 - core.optimization - INFO - 🚀 LazyLoader inicializado
+2025-12-16 14:48:39,067 - __main__ - INFO - 🤖 Inicializando Telegram Bot...
+2025-12-16 14:48:39,067 - telegram_bot.bot - INFO - 📋 Admin IDs parseados: [7792117959]
+2025-12-16 14:48:39,068 - telegram_bot.bot - INFO - 🤖 EliasBot inicializado correctamente
+2025-12-16 14:48:39,068 - __main__ - INFO - 🚀 Iniciando bot de Telegram...
+2025-12-16 14:48:39,224 - telegram_bot.bot - INFO - 🔧 Handlers configurados correctamente
+2025-12-16 14:48:45,282 - ia.services.transcription_service - INFO - ✅ AssemblyAI configurado correctamente
+2025-12-16 14:48:45,282 - ia.services.transcription_service - INFO - ✅ Servicio de transcripción AssemblyAI inicializado
+2025-12-16 14:48:45,283 - core.optimization - INFO - ✅ langgraph_service cargado en 6.06s
+2025-12-16 14:48:45,283 - telegram_bot.bot - INFO - ✅ LangGraphService disponible (lazy loading)
+2025-12-16 14:48:45,283 - telegram_bot.bot - INFO - 🚀 Optimizaciones activas: Caché, Debouncing, Lazy Loading
+2025-12-16 14:48:45,283 - telegram_bot.bot - INFO - ✅ Servicios básicos inicializados para Telegram
+2025-12-16 14:48:45,284 - telegram_bot.bot - INFO - ✅ Bot construido correctamente
+2025-12-16 14:48:45,284 - telegram_bot.bot - INFO - 🚀 Iniciando EliasBot...
+2025-12-16 14:48:45,284 - telegram_bot.bot - INFO - 📋 Administradores: [7792117959]
+2025-12-16 14:48:46,350 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getMe "HTTP/1.1 200 OK"
+2025-12-16 14:48:46,617 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/deleteWebhook "HTTP/1.1 200 OK"
+2025-12-16 14:48:46,619 - telegram.ext.Application - INFO - Application started
+2025-12-16 14:48:57,030 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:48:57,032 - telegram_bot.handlers.messages - INFO - 💬 Usuario 7792117959: Clase de inglés mañana de 5 a 7 de la tarde...
+2025-12-16 14:48:57,972 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/sendChatAction "HTTP/1.1 200 OK"
+2025-12-16 14:48:57,973 - telegram_bot.bot - INFO - 🔄 Procesando consulta de usuario 7792117959: Clase de inglés mañana de 5 a 7 de la tarde...
+2025-12-16 14:48:58,229 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-16 14:49:04,232 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-16 14:49:04,510 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-16 14:49:08,889 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-16 14:49:09,395 - httpx - INFO - HTTP Request: POST https://api.notion.com/v1/pages "HTTP/1.1 404 Not Found"
+2025-12-16 14:49:09,398 - telegram_bot.bot - INFO - ✅ Consulta procesada con LangGraph para usuario 7792117959
+2025-12-16 14:49:09,400 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:49:10,339 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/sendMessage "HTTP/1.1 200 OK"
+2025-12-16 14:49:10,340 - telegram_bot.handlers.messages - INFO - ✅ Respuesta enviada a usuario 7792117959
+2025-12-16 14:49:19,706 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:49:29,967 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:49:40,231 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:49:50,496 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:49:57,765 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:49:57,766 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-12-16 14:49:57,767 - telegram.ext.Application - INFO - Application.stop() complete
+2025-12-16 14:49:57,770 - telegram_bot.bot - ERROR - ❌ Error ejecutando bot: a coroutine was expected, got None
+2025-12-16 14:49:57,770 - __main__ - ERROR - ❌ Error crítico ejecutando bot: a coroutine was expected, got None
+2025-12-16 14:49:57,771 - __main__ - ERROR - ❌ Error fatal: a coroutine was expected, got None
+2025-12-16 14:49:59,858 - __main__ - INFO - 📦 Verificando dependencias...
+2025-12-16 14:50:01,573 - __main__ - INFO - ✅ python-telegram-bot v22.5 está instalado
+2025-12-16 14:50:01,573 - __main__ - INFO - 🔧 Validando configuración...
+2025-12-16 14:50:01,612 - __main__ - INFO - ✅ Configuración validada correctamente
+2025-12-16 14:50:01,612 - __main__ - INFO - 🚀 Inicializando ELiaS...
+2025-12-16 14:50:03,476 - httpx - INFO - HTTP Request: GET https://api.notion.com/v1/users/me "HTTP/1.1 200 OK"
+2025-12-16 14:50:03,528 - core.optimization - INFO - 🗄️ ResponseCache inicializado (TTL: 300s, Max: 100)
+2025-12-16 14:50:03,529 - core.optimization - INFO - ⏱️ MessageDebouncer inicializado (delay: 1.5s, max: 5)
+2025-12-16 14:50:03,530 - core.optimization - INFO - 🚀 LazyLoader inicializado
+2025-12-16 14:50:03,561 - __main__ - INFO - 🤖 Inicializando Telegram Bot...
+2025-12-16 14:50:03,561 - telegram_bot.bot - INFO - 📋 Admin IDs parseados: [7792117959]
+2025-12-16 14:50:03,561 - telegram_bot.bot - INFO - 🤖 EliasBot inicializado correctamente
+2025-12-16 14:50:03,561 - __main__ - INFO - 🚀 Iniciando bot de Telegram...
+2025-12-16 14:50:03,748 - telegram_bot.bot - INFO - 🔧 Handlers configurados correctamente
+2025-12-16 14:50:10,401 - ia.services.transcription_service - INFO - ✅ AssemblyAI configurado correctamente
+2025-12-16 14:50:10,401 - ia.services.transcription_service - INFO - ✅ Servicio de transcripción AssemblyAI inicializado
+2025-12-16 14:50:10,402 - core.optimization - INFO - ✅ langgraph_service cargado en 6.65s
+2025-12-16 14:50:10,402 - telegram_bot.bot - INFO - ✅ LangGraphService disponible (lazy loading)
+2025-12-16 14:50:10,402 - telegram_bot.bot - INFO - 🚀 Optimizaciones activas: Caché, Debouncing, Lazy Loading
+2025-12-16 14:50:10,402 - telegram_bot.bot - INFO - ✅ Servicios básicos inicializados para Telegram
+2025-12-16 14:50:10,402 - telegram_bot.bot - INFO - ✅ Bot construido correctamente
+2025-12-16 14:50:10,403 - telegram_bot.bot - INFO - 🚀 Iniciando EliasBot...
+2025-12-16 14:50:10,403 - telegram_bot.bot - INFO - 📋 Administradores: [7792117959]
+2025-12-16 14:50:11,338 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getMe "HTTP/1.1 200 OK"
+2025-12-16 14:50:11,634 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/deleteWebhook "HTTP/1.1 200 OK"
+2025-12-16 14:50:11,635 - telegram.ext.Application - INFO - Application started
+2025-12-16 14:50:14,323 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:50:14,324 - telegram_bot.handlers.messages - INFO - 💬 Usuario 7792117959: Clase de inglés mañana de 5 a 7 de la tarde...
+2025-12-16 14:50:14,704 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/sendChatAction "HTTP/1.1 200 OK"
+2025-12-16 14:50:14,705 - telegram_bot.bot - INFO - 🔄 Procesando consulta de usuario 7792117959: Clase de inglés mañana de 5 a 7 de la tarde...
+2025-12-16 14:50:14,958 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-16 14:50:20,199 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-16 14:50:20,457 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-16 14:50:23,908 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-16 14:50:24,336 - httpx - INFO - HTTP Request: POST https://api.notion.com/v1/pages "HTTP/1.1 404 Not Found"
+2025-12-16 14:50:24,338 - telegram_bot.bot - INFO - ✅ Consulta procesada con LangGraph para usuario 7792117959
+2025-12-16 14:50:24,576 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:50:25,283 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/sendMessage "HTTP/1.1 200 OK"
+2025-12-16 14:50:25,284 - telegram_bot.handlers.messages - INFO - ✅ Respuesta enviada a usuario 7792117959
+2025-12-16 14:50:34,858 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:50:45,137 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:50:55,397 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:51:05,659 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:51:15,987 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:51:26,269 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:51:36,529 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:51:43,553 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:51:43,554 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-12-16 14:51:43,555 - telegram.ext.Application - INFO - Application.stop() complete
+2025-12-16 14:51:43,557 - telegram_bot.bot - ERROR - ❌ Error ejecutando bot: a coroutine was expected, got None
+2025-12-16 14:51:43,557 - __main__ - ERROR - ❌ Error crítico ejecutando bot: a coroutine was expected, got None
+2025-12-16 14:51:43,558 - __main__ - ERROR - ❌ Error fatal: a coroutine was expected, got None
+2025-12-16 14:51:45,604 - __main__ - INFO - 📦 Verificando dependencias...
+2025-12-16 14:51:46,942 - __main__ - INFO - ✅ python-telegram-bot v22.5 está instalado
+2025-12-16 14:51:46,942 - __main__ - INFO - 🔧 Validando configuración...
+2025-12-16 14:51:46,991 - __main__ - INFO - ✅ Configuración validada correctamente
+2025-12-16 14:51:46,991 - __main__ - INFO - 🚀 Inicializando ELiaS...
+2025-12-16 14:51:48,963 - httpx - INFO - HTTP Request: GET https://api.notion.com/v1/users/me "HTTP/1.1 200 OK"
+2025-12-16 14:51:49,035 - core.optimization - INFO - 🗄️ ResponseCache inicializado (TTL: 300s, Max: 100)
+2025-12-16 14:51:49,035 - core.optimization - INFO - ⏱️ MessageDebouncer inicializado (delay: 1.5s, max: 5)
+2025-12-16 14:51:49,036 - core.optimization - INFO - 🚀 LazyLoader inicializado
+2025-12-16 14:51:49,071 - __main__ - INFO - 🤖 Inicializando Telegram Bot...
+2025-12-16 14:51:49,071 - telegram_bot.bot - INFO - 📋 Admin IDs parseados: [7792117959]
+2025-12-16 14:51:49,071 - telegram_bot.bot - INFO - 🤖 EliasBot inicializado correctamente
+2025-12-16 14:51:49,071 - __main__ - INFO - 🚀 Iniciando bot de Telegram...
+2025-12-16 14:51:49,251 - telegram_bot.bot - INFO - 🔧 Handlers configurados correctamente
+2025-12-16 14:51:55,809 - ia.services.transcription_service - INFO - ✅ AssemblyAI configurado correctamente
+2025-12-16 14:51:55,810 - ia.services.transcription_service - INFO - ✅ Servicio de transcripción AssemblyAI inicializado
+2025-12-16 14:51:55,810 - core.optimization - INFO - ✅ langgraph_service cargado en 6.56s
+2025-12-16 14:51:55,810 - telegram_bot.bot - INFO - ✅ LangGraphService disponible (lazy loading)
+2025-12-16 14:51:55,810 - telegram_bot.bot - INFO - 🚀 Optimizaciones activas: Caché, Debouncing, Lazy Loading
+2025-12-16 14:51:55,811 - telegram_bot.bot - INFO - ✅ Servicios básicos inicializados para Telegram
+2025-12-16 14:51:55,811 - telegram_bot.bot - INFO - ✅ Bot construido correctamente
+2025-12-16 14:51:55,811 - telegram_bot.bot - INFO - 🚀 Iniciando EliasBot...
+2025-12-16 14:51:55,811 - telegram_bot.bot - INFO - 📋 Administradores: [7792117959]
+2025-12-16 14:51:56,707 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getMe "HTTP/1.1 200 OK"
+2025-12-16 14:51:56,967 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/deleteWebhook "HTTP/1.1 200 OK"
+2025-12-16 14:51:56,969 - telegram.ext.Application - INFO - Application started
+2025-12-16 14:52:05,525 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:52:05,527 - telegram_bot.handlers.messages - INFO - 💬 Usuario 7792117959: Clase de inglés mañana de 5 a 7 de la tarde...
+2025-12-16 14:52:06,436 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/sendChatAction "HTTP/1.1 200 OK"
+2025-12-16 14:52:06,437 - telegram_bot.bot - INFO - 🔄 Procesando consulta de usuario 7792117959: Clase de inglés mañana de 5 a 7 de la tarde...
+2025-12-16 14:52:06,759 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-16 14:52:12,266 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-16 14:52:12,559 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-16 14:52:16,098 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-16 14:52:18,010 - httpx - INFO - HTTP Request: POST https://api.notion.com/v1/pages "HTTP/1.1 404 Not Found"
+2025-12-16 14:52:18,012 - telegram_bot.bot - INFO - ✅ Consulta procesada con LangGraph para usuario 7792117959
+2025-12-16 14:52:18,014 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:52:19,237 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/sendMessage "HTTP/1.1 200 OK"
+2025-12-16 14:52:19,238 - telegram_bot.handlers.messages - INFO - ✅ Respuesta enviada a usuario 7792117959
+2025-12-16 14:52:28,308 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:52:38,583 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:52:48,846 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:52:59,145 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:53:09,407 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:53:19,690 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:53:29,995 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:53:40,256 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:53:50,541 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:54:00,827 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:54:11,096 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:54:21,385 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:54:28,761 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:54:28,763 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-12-16 14:54:28,765 - telegram.ext.Application - INFO - Application.stop() complete
+2025-12-16 14:54:28,786 - telegram_bot.bot - ERROR - ❌ Error ejecutando bot: a coroutine was expected, got None
+2025-12-16 14:54:28,790 - __main__ - ERROR - ❌ Error crítico ejecutando bot: a coroutine was expected, got None
+2025-12-16 14:54:28,792 - __main__ - ERROR - ❌ Error fatal: a coroutine was expected, got None
+2025-12-16 14:54:31,662 - __main__ - INFO - 📦 Verificando dependencias...
+2025-12-16 14:54:33,383 - __main__ - INFO - ✅ python-telegram-bot v22.5 está instalado
+2025-12-16 14:54:33,383 - __main__ - INFO - 🔧 Validando configuración...
+2025-12-16 14:54:33,492 - __main__ - INFO - ✅ Configuración validada correctamente
+2025-12-16 14:54:33,493 - __main__ - INFO - 🚀 Inicializando ELiaS...
+2025-12-16 14:54:35,778 - httpx - INFO - HTTP Request: GET https://api.notion.com/v1/users/me "HTTP/1.1 200 OK"
+2025-12-16 14:54:35,862 - core.optimization - INFO - 🗄️ ResponseCache inicializado (TTL: 300s, Max: 100)
+2025-12-16 14:54:35,863 - core.optimization - INFO - ⏱️ MessageDebouncer inicializado (delay: 1.5s, max: 5)
+2025-12-16 14:54:35,863 - core.optimization - INFO - 🚀 LazyLoader inicializado
+2025-12-16 14:54:35,896 - __main__ - INFO - 🤖 Inicializando Telegram Bot...
+2025-12-16 14:54:35,897 - telegram_bot.bot - INFO - 📋 Admin IDs parseados: [7792117959]
+2025-12-16 14:54:35,897 - telegram_bot.bot - INFO - 🤖 EliasBot inicializado correctamente
+2025-12-16 14:54:35,897 - __main__ - INFO - 🚀 Iniciando bot de Telegram...
+2025-12-16 14:54:36,062 - telegram_bot.bot - INFO - 🔧 Handlers configurados correctamente
+2025-12-16 14:54:42,600 - ia.services.transcription_service - INFO - ✅ AssemblyAI configurado correctamente
+2025-12-16 14:54:42,600 - ia.services.transcription_service - INFO - ✅ Servicio de transcripción AssemblyAI inicializado
+2025-12-16 14:54:42,601 - core.optimization - INFO - ✅ langgraph_service cargado en 6.54s
+2025-12-16 14:54:42,601 - telegram_bot.bot - INFO - ✅ LangGraphService disponible (lazy loading)
+2025-12-16 14:54:42,601 - telegram_bot.bot - INFO - 🚀 Optimizaciones activas: Caché, Debouncing, Lazy Loading
+2025-12-16 14:54:42,601 - telegram_bot.bot - INFO - ✅ Servicios básicos inicializados para Telegram
+2025-12-16 14:54:42,602 - telegram_bot.bot - INFO - ✅ Bot construido correctamente
+2025-12-16 14:54:42,602 - telegram_bot.bot - INFO - 🚀 Iniciando EliasBot...
+2025-12-16 14:54:42,602 - telegram_bot.bot - INFO - 📋 Administradores: [7792117959]
+2025-12-16 14:54:48,698 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/deleteWebhook "HTTP/1.1 200 OK"
+2025-12-16 14:54:49,562 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:54:49,564 - telegram_bot.bot - ERROR - ❌ Error ejecutando bot: ExtBot is not properly initialized. Call `ExtBot.initialize` before accessing this property.
+2025-12-16 14:54:49,564 - __main__ - ERROR - ❌ Error crítico ejecutando bot: ExtBot is not properly initialized. Call `ExtBot.initialize` before accessing this property.
+2025-12-16 14:54:49,564 - __main__ - ERROR - ❌ Error fatal: ExtBot is not properly initialized. Call `ExtBot.initialize` before accessing this property.
+2025-12-16 14:54:56,637 - __main__ - INFO - 📦 Verificando dependencias...
+2025-12-16 14:54:57,961 - __main__ - INFO - ✅ python-telegram-bot v22.5 está instalado
+2025-12-16 14:54:57,961 - __main__ - INFO - 🔧 Validando configuración...
+2025-12-16 14:54:58,002 - __main__ - INFO - ✅ Configuración validada correctamente
+2025-12-16 14:54:58,002 - __main__ - INFO - 🚀 Inicializando ELiaS...
+2025-12-16 14:55:00,046 - httpx - INFO - HTTP Request: GET https://api.notion.com/v1/users/me "HTTP/1.1 200 OK"
+2025-12-16 14:55:00,095 - core.optimization - INFO - 🗄️ ResponseCache inicializado (TTL: 300s, Max: 100)
+2025-12-16 14:55:00,096 - core.optimization - INFO - ⏱️ MessageDebouncer inicializado (delay: 1.5s, max: 5)
+2025-12-16 14:55:00,096 - core.optimization - INFO - 🚀 LazyLoader inicializado
+2025-12-16 14:55:00,130 - __main__ - INFO - 🤖 Inicializando Telegram Bot...
+2025-12-16 14:55:00,131 - telegram_bot.bot - INFO - 📋 Admin IDs parseados: [7792117959]
+2025-12-16 14:55:00,131 - telegram_bot.bot - INFO - 🤖 EliasBot inicializado correctamente
+2025-12-16 14:55:00,131 - __main__ - INFO - 🚀 Iniciando bot de Telegram...
+2025-12-16 14:55:00,302 - telegram_bot.bot - INFO - 🔧 Handlers configurados correctamente
+2025-12-16 14:55:06,559 - ia.services.transcription_service - INFO - ✅ AssemblyAI configurado correctamente
+2025-12-16 14:55:06,559 - ia.services.transcription_service - INFO - ✅ Servicio de transcripción AssemblyAI inicializado
+2025-12-16 14:55:06,559 - core.optimization - INFO - ✅ langgraph_service cargado en 6.26s
+2025-12-16 14:55:06,560 - telegram_bot.bot - INFO - ✅ LangGraphService disponible (lazy loading)
+2025-12-16 14:55:06,560 - telegram_bot.bot - INFO - 🚀 Optimizaciones activas: Caché, Debouncing, Lazy Loading
+2025-12-16 14:55:06,560 - telegram_bot.bot - INFO - ✅ Servicios básicos inicializados para Telegram
+2025-12-16 14:55:06,560 - telegram_bot.bot - INFO - ✅ Bot construido correctamente
+2025-12-16 14:55:06,560 - telegram_bot.bot - INFO - 🚀 Iniciando EliasBot...
+2025-12-16 14:55:06,560 - telegram_bot.bot - INFO - 📋 Administradores: [7792117959]
+2025-12-16 14:55:07,354 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getMe "HTTP/1.1 200 OK"
+2025-12-16 14:55:07,615 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/deleteWebhook "HTTP/1.1 200 OK"
+2025-12-16 14:55:07,617 - telegram.ext.Application - INFO - Application started
+2025-12-16 14:55:18,537 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:55:28,815 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:55:39,079 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:55:49,342 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:55:51,369 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:55:51,371 - telegram_bot.handlers.messages - INFO - 💬 Usuario 7792117959: Clase de inglés mañana de 5 a 7 de la tarde...
+2025-12-16 14:55:52,304 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/sendChatAction "HTTP/1.1 200 OK"
+2025-12-16 14:55:52,305 - telegram_bot.bot - INFO - 🔄 Procesando consulta de usuario 7792117959: Clase de inglés mañana de 5 a 7 de la tarde...
+2025-12-16 14:55:52,724 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-16 14:56:00,087 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-16 14:56:00,315 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-16 14:56:05,760 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-16 14:56:06,695 - httpx - INFO - HTTP Request: POST https://api.notion.com/v1/pages "HTTP/1.1 400 Bad Request"
+2025-12-16 14:56:06,697 - telegram_bot.bot - INFO - ✅ Consulta procesada con LangGraph para usuario 7792117959
+2025-12-16 14:56:06,699 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:56:07,687 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/sendMessage "HTTP/1.1 200 OK"
+2025-12-16 14:56:07,688 - telegram_bot.handlers.messages - INFO - ✅ Respuesta enviada a usuario 7792117959
+2025-12-16 14:56:16,985 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:56:22,343 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:56:22,344 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-12-16 14:56:22,344 - telegram.ext.Application - INFO - Application.stop() complete
+2025-12-16 14:56:22,345 - telegram_bot.bot - ERROR - ❌ Error ejecutando bot: a coroutine was expected, got None
+2025-12-16 14:56:22,346 - __main__ - ERROR - ❌ Error crítico ejecutando bot: a coroutine was expected, got None
+2025-12-16 14:56:22,346 - __main__ - ERROR - ❌ Error fatal: a coroutine was expected, got None
+2025-12-16 14:58:25,709 - __main__ - INFO - 📦 Verificando dependencias...
+2025-12-16 14:58:27,582 - __main__ - INFO - ✅ python-telegram-bot v22.5 está instalado
+2025-12-16 14:58:27,582 - __main__ - INFO - 🔧 Validando configuración...
+2025-12-16 14:58:27,631 - __main__ - INFO - ✅ Configuración validada correctamente
+2025-12-16 14:58:27,631 - __main__ - INFO - 🚀 Inicializando ELiaS...
+2025-12-16 14:58:29,302 - httpx - INFO - HTTP Request: GET https://api.notion.com/v1/users/me "HTTP/1.1 200 OK"
+2025-12-16 14:58:29,403 - core.optimization - INFO - 🗄️ ResponseCache inicializado (TTL: 300s, Max: 100)
+2025-12-16 14:58:29,404 - core.optimization - INFO - ⏱️ MessageDebouncer inicializado (delay: 1.5s, max: 5)
+2025-12-16 14:58:29,404 - core.optimization - INFO - 🚀 LazyLoader inicializado
+2025-12-16 14:58:29,442 - __main__ - INFO - 🤖 Inicializando Telegram Bot...
+2025-12-16 14:58:29,442 - telegram_bot.bot - INFO - 📋 Admin IDs parseados: [7792117959]
+2025-12-16 14:58:29,443 - telegram_bot.bot - INFO - 🤖 EliasBot inicializado correctamente
+2025-12-16 14:58:29,443 - __main__ - INFO - 🚀 Iniciando bot de Telegram...
+2025-12-16 14:58:29,601 - telegram_bot.bot - INFO - 🔧 Handlers configurados correctamente
+2025-12-16 14:58:36,327 - ia.services.transcription_service - INFO - ✅ AssemblyAI configurado correctamente
+2025-12-16 14:58:36,327 - ia.services.transcription_service - INFO - ✅ Servicio de transcripción AssemblyAI inicializado
+2025-12-16 14:58:36,327 - core.optimization - INFO - ✅ langgraph_service cargado en 6.73s
+2025-12-16 14:58:36,328 - telegram_bot.bot - INFO - ✅ LangGraphService disponible (lazy loading)
+2025-12-16 14:58:36,328 - telegram_bot.bot - INFO - 🚀 Optimizaciones activas: Caché, Debouncing, Lazy Loading
+2025-12-16 14:58:36,328 - telegram_bot.bot - INFO - ✅ Servicios básicos inicializados para Telegram
+2025-12-16 14:58:36,328 - telegram_bot.bot - INFO - ✅ Bot construido correctamente
+2025-12-16 14:58:36,328 - telegram_bot.bot - INFO - 🚀 Iniciando EliasBot...
+2025-12-16 14:58:36,329 - telegram_bot.bot - INFO - 📋 Administradores: [7792117959]
+2025-12-16 14:58:37,279 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getMe "HTTP/1.1 200 OK"
+2025-12-16 14:58:37,554 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/deleteWebhook "HTTP/1.1 200 OK"
+2025-12-16 14:58:37,555 - telegram.ext.Application - INFO - Application started
+2025-12-16 14:58:48,406 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:58:58,681 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:59:02,362 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:59:02,364 - telegram_bot.handlers.messages - INFO - 💬 Usuario 7792117959: Clase de inglés mañana de 5 a 7 de la tarde...
+2025-12-16 14:59:03,411 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/sendChatAction "HTTP/1.1 200 OK"
+2025-12-16 14:59:03,412 - telegram_bot.bot - INFO - 🔄 Procesando consulta de usuario 7792117959: Clase de inglés mañana de 5 a 7 de la tarde...
+2025-12-16 14:59:03,711 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-16 14:59:08,659 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-16 14:59:08,913 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-16 14:59:12,272 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-16 14:59:13,308 - httpx - INFO - HTTP Request: POST https://api.notion.com/v1/pages "HTTP/1.1 200 OK"
+2025-12-16 14:59:13,310 - telegram_bot.bot - INFO - ✅ Consulta procesada con LangGraph para usuario 7792117959
+2025-12-16 14:59:13,312 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:59:14,603 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/sendMessage "HTTP/1.1 200 OK"
+2025-12-16 14:59:14,604 - telegram_bot.handlers.messages - INFO - ✅ Respuesta enviada a usuario 7792117959
+2025-12-16 14:59:23,586 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:59:33,862 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:59:44,138 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:59:54,413 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:59:58,840 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7677204696:AAFLU9IBU0lROegsU7aOM5dM_SPxiKk5kMo/getUpdates "HTTP/1.1 200 OK"
+2025-12-16 14:59:58,841 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-12-16 14:59:58,842 - telegram.ext.Application - INFO - Application.stop() complete
+2025-12-16 14:59:58,847 - telegram_bot.bot - ERROR - ❌ Error ejecutando bot: a coroutine was expected, got None
+2025-12-16 14:59:58,847 - __main__ - ERROR - ❌ Error crítico ejecutando bot: a coroutine was expected, got None
+2025-12-16 14:59:58,847 - __main__ - ERROR - ❌ Error fatal: a coroutine was expected, got None
